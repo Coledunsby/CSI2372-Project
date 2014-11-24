@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>27C894F0-1104-4807-8148-74E4E136109D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CSI2372-Project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>DB2CF97979F801DF23FC644B9D87306DF35B91A0</key>
+		<string>https://github.com/Coledunsby/CSI2372-Project.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CSI2372-Project.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>DB2CF97979F801DF23FC644B9D87306DF35B91A0</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Coledunsby/CSI2372-Project.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>DB2CF97979F801DF23FC644B9D87306DF35B91A0</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DB2CF97979F801DF23FC644B9D87306DF35B91A0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CSI2372-Project</string>
+		</dict>
+	</array>
+</dict>
+</plist>

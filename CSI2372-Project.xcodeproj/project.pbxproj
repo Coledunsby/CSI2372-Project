@@ -1,0 +1,258 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ED52A5E81A115CD40050C48F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED52A5E71A115CD40050C48F /* main.cpp */; };
+		EDD5A37D1A23C8C000BBD9CE /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDD5A37B1A23C8C000BBD9CE /* player.cpp */; };
+		EDD5A3801A23C8C700BBD9CE /* gameboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDD5A37E1A23C8C700BBD9CE /* gameboard.cpp */; };
+		EDD5A3831A23C8DA00BBD9CE /* tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDD5A3811A23C8DA00BBD9CE /* tile.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		ED52A5E21A115CD40050C48F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		ED52A5E41A115CD40050C48F /* CSI2372-Project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CSI2372-Project"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED52A5E71A115CD40050C48F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		EDD5A37B1A23C8C000BBD9CE /* player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player.cpp; sourceTree = "<group>"; };
+		EDD5A37C1A23C8C000BBD9CE /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
+		EDD5A37E1A23C8C700BBD9CE /* gameboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gameboard.cpp; sourceTree = "<group>"; };
+		EDD5A37F1A23C8C700BBD9CE /* gameboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gameboard.h; sourceTree = "<group>"; };
+		EDD5A3811A23C8DA00BBD9CE /* tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tile.cpp; sourceTree = "<group>"; };
+		EDD5A3821A23C8DA00BBD9CE /* tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tile.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ED52A5E11A115CD40050C48F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ED52A5DB1A115CD40050C48F = {
+			isa = PBXGroup;
+			children = (
+				ED52A5E61A115CD40050C48F /* CSI2372-Project */,
+				ED52A5E51A115CD40050C48F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ED52A5E51A115CD40050C48F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ED52A5E41A115CD40050C48F /* CSI2372-Project */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ED52A5E61A115CD40050C48F /* CSI2372-Project */ = {
+			isa = PBXGroup;
+			children = (
+				ED52A5E71A115CD40050C48F /* main.cpp */,
+				EDD5A37F1A23C8C700BBD9CE /* gameboard.h */,
+				EDD5A37E1A23C8C700BBD9CE /* gameboard.cpp */,
+				EDD5A37C1A23C8C000BBD9CE /* player.h */,
+				EDD5A37B1A23C8C000BBD9CE /* player.cpp */,
+				EDD5A3821A23C8DA00BBD9CE /* tile.h */,
+				EDD5A3811A23C8DA00BBD9CE /* tile.cpp */,
+			);
+			path = "CSI2372-Project";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ED52A5E31A115CD40050C48F /* CSI2372-Project */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ED52A5EB1A115CD40050C48F /* Build configuration list for PBXNativeTarget "CSI2372-Project" */;
+			buildPhases = (
+				ED52A5E01A115CD40050C48F /* Sources */,
+				ED52A5E11A115CD40050C48F /* Frameworks */,
+				ED52A5E21A115CD40050C48F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CSI2372-Project";
+			productName = "CSI2372-Project";
+			productReference = ED52A5E41A115CD40050C48F /* CSI2372-Project */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ED52A5DC1A115CD40050C48F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Cole Dunsby";
+				TargetAttributes = {
+					ED52A5E31A115CD40050C48F = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = ED52A5DF1A115CD40050C48F /* Build configuration list for PBXProject "CSI2372-Project" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = ED52A5DB1A115CD40050C48F;
+			productRefGroup = ED52A5E51A115CD40050C48F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ED52A5E31A115CD40050C48F /* CSI2372-Project */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ED52A5E01A115CD40050C48F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDD5A37D1A23C8C000BBD9CE /* player.cpp in Sources */,
+				ED52A5E81A115CD40050C48F /* main.cpp in Sources */,
+				EDD5A3801A23C8C700BBD9CE /* gameboard.cpp in Sources */,
+				EDD5A3831A23C8DA00BBD9CE /* tile.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		ED52A5E91A115CD40050C48F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		ED52A5EA1A115CD40050C48F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		ED52A5EC1A115CD40050C48F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ED52A5ED1A115CD40050C48F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ED52A5DF1A115CD40050C48F /* Build configuration list for PBXProject "CSI2372-Project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED52A5E91A115CD40050C48F /* Debug */,
+				ED52A5EA1A115CD40050C48F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ED52A5EB1A115CD40050C48F /* Build configuration list for PBXNativeTarget "CSI2372-Project" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ED52A5EC1A115CD40050C48F /* Debug */,
+				ED52A5ED1A115CD40050C48F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ED52A5DC1A115CD40050C48F /* Project object */;
+}
