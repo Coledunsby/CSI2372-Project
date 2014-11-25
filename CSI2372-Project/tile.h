@@ -39,55 +39,55 @@ class Desert: public Tile {
 };
 
 class Restaurant: public Tile {
-    
+    bool action(Player& player);
 };
 
 class SpiceMerchant: public Tile {
-    
+    bool action(Player& player);
 };
 
 class FabricManufacturer: public Tile {
-    
+    bool action(Player& player);
 };
 
 class Jeweler: public Tile {
-    
+    bool action(Player& player);
 };
 
 class CartManufacturer: public Tile {
-    
+    bool action(Player& player);
 };
 
 class SmallMarket: public Tile {
-    
+    bool action(Player& player);
 };
 
 class SpiceMarket: public Tile {
-    
+    bool action(Player& player);
 };
 
 class Jewelrymarket: public Tile {
-    
+    bool action(Player& player);
 };
 
 class FabricMarket: public Tile {
-    
+    bool action(Player& player);
 };
 
 class BlackMarket: public Tile {
-    
+    bool action(Player& player);
 };
 
 class Casino: public Tile {
-    
+    bool action(Player& player);
 };
 
 class GemMerchant: public Tile {
-    
+    bool action(Player& player);
 };
 
 class Palace: public Tile {
-    
+    bool action(Player& player);
 };
 
 #endif /* defined(__CSI2372_Project__tile__) */
