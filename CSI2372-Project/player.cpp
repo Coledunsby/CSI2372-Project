@@ -31,3 +31,63 @@ void Player::eat() {
         food--;
     }
 }
+
+// Getters
+
+int Player::getGold() const {
+    return gold;
+}
+
+int Player::getRuby() const {
+    return ruby;
+}
+
+int Player::getSpice() const {
+    return spice;
+}
+
+int Player::getFabric() const {
+    return fabric;
+}
+
+int Player::getJewel() const {
+    return jewel;
+}
+
+int Player::getCart() const {
+    return cart;
+}
+
+int Player::getFood() const {
+    return food;
+}
+
+// Setters
+
+void Player::setGold(const int newGold) {
+    gold = newGold;
+}
+
+void Player::setRuby(const int newRuby) {
+    ruby = newRuby;
+}
+
+void Player::setSpice(const int newSpice) {
+    spice = newSpice;
+}
+
+void Player::setFabric(const int newFabric) {
+    fabric = newFabric;
+}
+
+void Player::setJewel(const int newJewel) {
+    jewel = newJewel;
+}
+
+void Player::setCart(const int newCart) {
+    cart = newCart;
+}
+
+void Player::setFood(const int newFood) {
+    food = newFood;
+}
