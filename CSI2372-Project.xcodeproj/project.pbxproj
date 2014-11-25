@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		ED52A5E81A115CD40050C48F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED52A5E71A115CD40050C48F /* main.cpp */; };
 		EDD5A37D1A23C8C000BBD9CE /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDD5A37B1A23C8C000BBD9CE /* player.cpp */; };
-		EDD5A3801A23C8C700BBD9CE /* gameboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDD5A37E1A23C8C700BBD9CE /* gameboard.cpp */; };
-		EDD5A3831A23C8DA00BBD9CE /* tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDD5A3811A23C8DA00BBD9CE /* tile.cpp */; };
+		EDF83F061A2517FC0075BD36 /* tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDF83F051A2517FC0075BD36 /* tile.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,10 +29,10 @@
 		ED52A5E71A115CD40050C48F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		EDD5A37B1A23C8C000BBD9CE /* player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player.cpp; sourceTree = "<group>"; };
 		EDD5A37C1A23C8C000BBD9CE /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
-		EDD5A37E1A23C8C700BBD9CE /* gameboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gameboard.cpp; sourceTree = "<group>"; };
 		EDD5A37F1A23C8C700BBD9CE /* gameboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gameboard.h; sourceTree = "<group>"; };
-		EDD5A3811A23C8DA00BBD9CE /* tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tile.cpp; sourceTree = "<group>"; };
 		EDD5A3821A23C8DA00BBD9CE /* tile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tile.h; sourceTree = "<group>"; };
+		EDF83F031A2516C30075BD36 /* gameboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gameboard.cpp; sourceTree = "<group>"; };
+		EDF83F051A2517FC0075BD36 /* tile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tile.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,11 +67,11 @@
 			children = (
 				ED52A5E71A115CD40050C48F /* main.cpp */,
 				EDD5A37F1A23C8C700BBD9CE /* gameboard.h */,
-				EDD5A37E1A23C8C700BBD9CE /* gameboard.cpp */,
+				EDF83F031A2516C30075BD36 /* gameboard.cpp */,
 				EDD5A37C1A23C8C000BBD9CE /* player.h */,
 				EDD5A37B1A23C8C000BBD9CE /* player.cpp */,
 				EDD5A3821A23C8DA00BBD9CE /* tile.h */,
-				EDD5A3811A23C8DA00BBD9CE /* tile.cpp */,
+				EDF83F051A2517FC0075BD36 /* tile.cpp */,
 			);
 			path = "CSI2372-Project";
 			sourceTree = "<group>";
@@ -135,8 +134,7 @@
 			files = (
 				EDD5A37D1A23C8C000BBD9CE /* player.cpp in Sources */,
 				ED52A5E81A115CD40050C48F /* main.cpp in Sources */,
-				EDD5A3801A23C8C700BBD9CE /* gameboard.cpp in Sources */,
-				EDD5A3831A23C8DA00BBD9CE /* tile.cpp in Sources */,
+				EDF83F061A2517FC0075BD36 /* tile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,14 +218,18 @@
 		ED52A5EC1A115CD40050C48F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		ED52A5ED1A115CD40050C48F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

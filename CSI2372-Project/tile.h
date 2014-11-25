@@ -20,11 +20,18 @@ public:
     bool operator==(const Tile &t);
     virtual bool action(Player& player);
     virtual Tile* clone();
-    ostream& operator<<;
+    //ostream& operator<<;
 };
 
 class TileFactory {
     
+public:
+    TileFactory(int _nTiles);
+    static TileFactory *get(int _nTiles) {
+        static TileFactory tf(_nTiles);
+        return &tf;
+    }
+    Tile* next(); // return new tile
 };
 
 class Desert: public Tile {

@@ -7,9 +7,28 @@
 //
 
 #include <iostream>
+#include "gameboard.h"
+#include "tile.h"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    
+    Player player1, player2;
+    
+    std::vector<Player> players;
+    players.push_back(player1);
+    players.push_back(player2);
+    
+    GameBoard<Tile, Player, 6, 6> bg(players);
+    bg.draw();
+    
+    /*
+    TileFactory *tf;
+    for (int i = 0; i < 6; i++) {
+        for (int j = 0; j < 6; j++) {
+            //bg.add(tf->next(), i, j);
+        }
+    }
+     */
+    
     return 0;
 }
