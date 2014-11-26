@@ -23,6 +23,7 @@ public:
     bool canAct() const;
     bool pay(Player& player);
     void eat();
+
     
     int getGold() const;
     int getRuby() const;

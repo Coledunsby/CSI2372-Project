@@ -123,7 +123,7 @@ class SmallMarket: public Tile {
     player.setFabric(player.getFabric()-1);
     player.setJewlery(player.getJewlery()-1);
     player.setSpice(player.getSpice()-1);
-    player.setGold(player.getGold()+8)
+    player.setGold(player.getGold()+8);
     
     int goldNum = player.getGold();
     int spiceNum = player.getSpice();
@@ -200,6 +200,7 @@ class FabricMarket: public Tile {
                 return true;
                 }
                 else return false;
+                }
 };
 
 class BlackMarket: public Tile {

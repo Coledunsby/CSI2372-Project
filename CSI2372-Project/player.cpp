@@ -32,6 +32,8 @@ void Player::eat() {
     }
 }
 
+
+
 // Getters
 
 int Player::getGold() const {
