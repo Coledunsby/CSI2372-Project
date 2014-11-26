@@ -27,22 +27,3 @@ bool Tile::action(Player &player) {
 Tile* Tile::clone() {
     return nullptr;
 }
-
-/* ------------------------------------------------------------------
- TileFactory
- ----------------------------------------------------------------- */
-
-TileFactory::TileFactory(int _nTiles) {
-    
-}
-
-/*
-TileFactory* TileFactory::get(int _nTiles) {
-    static TileFactory tf(_nTiles);
-    return &tf;
-}
- */
-
-Tile* TileFactory::next() {
-    return nullptr;
-}
