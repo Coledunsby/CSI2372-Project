@@ -115,6 +115,9 @@ try {
 return false;
 } 
 
+public bool isPaused(){
+       //
+       }
 
 
    
