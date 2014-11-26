@@ -27,12 +27,19 @@ public:
 class TileFactory {
     
 public:
-    TileFactory(int _nTiles);
+    TileFactory(int _nTiles) {
+        
+    }
+    
     static TileFactory *get(int _nTiles) {
         static TileFactory tf(_nTiles);
         return &tf;
     }
-    Tile* next(); // return new tile
+    
+    Tile& next() {
+        Tile *tile = new Tile();
+        return *tile;
+    }
 };
 
 class Desert: public Tile {
@@ -40,28 +47,33 @@ class Desert: public Tile {
 };
 
 class Restaurant: public Tile {
-    player.setfood(10);
+    bool action(Player& player) {
+        player.setFood(10);
+        return true;
+    }
 };
 
 class SpiceMerchant: public Tile {
-    bool action(Player& player){
-         if(player.getGold() >=2){
-                             
-    player.setGold(player.getGold()-2);
-    player.setSpice(player.getSpice()+3);
-    int goldNum = player.getGold();
-    int spiceNum = player.getSpice();
-    int rubysNum = player.getRubys();
-    int fabricNum = player.getFabric();
-    int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
-    
-    for (itemNum > player.getCart()){
-                player.setSpice(player.getSpice()-1);
-                } 
-                return true;
-                }
-                else return false;
-                } 
+    bool action(Player& player) {
+        if (player.getGold() >= 2) {
+             
+            player.setGold(player.getGold() - 2);
+            player.setSpice(player.getSpice() + 3);
+            int goldNum = player.getGold();
+            int spiceNum = player.getSpice();
+            int rubysNum = player.getRuby();
+            int fabricNum = player.getFabric();
+            int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
+            
+            while (itemNum > player.getCart()) {
+                player.setSpice(player.getSpice() - 1);
+            }
+            
+            return true;
+        } else {
+            return false;
+        }
+    }
 };
 
 class FabricManufacturer: public Tile {
@@ -72,11 +84,11 @@ class FabricManufacturer: public Tile {
     
     int goldNum = player.getGold();
     int spiceNum = player.getSpice();
-    int rubysNum = player.getRubys();
+    int rubysNum = player.getRuby();
     int fabricNum = player.getFabric();
     int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
     
-    for (itemNum > player.getCart()){
+    while (itemNum > player.getCart()){
                 player.setFabric(player.getFabric()-1);
                 }
                 return true;
@@ -89,16 +101,16 @@ class Jeweler: public Tile {
     bool action(Player& player){
          if(player.getGold() >=2){
     player.setGold(player.getGold()-2);
-    player.setJewlery(player.getJewlery()+3);
+    player.setJewel(player.getJewel()+3);
     
     int goldNum = player.getGold();
     int spiceNum = player.getSpice();
-    int rubysNum = player.getRubys();
+    int rubysNum = player.getRuby();
     int fabricNum = player.getFabric();
     int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
     
-    for (itemNum > player.getCart()){
-                player.setJewlery(player.getJewlery()-1);
+    while (itemNum > player.getCart()){
+                player.setJewel(player.getJewel()-1);
                 }
                 return true;
                 }
@@ -107,31 +119,32 @@ class Jeweler: public Tile {
 };
 
 class CartManufacturer: public Tile {
-    bool action(Player& player);
-    if(player.getGold() >= 7){
-                        
-    player.setGold(player.getGold()-7);
-    player.setCart(player.getCart()+3);
-    return true;
-}
-else return false;
+    bool action(Player& player) {
+        if(player.getGold() >= 7){
+            
+            player.setGold(player.getGold()-7);
+            player.setCart(player.getCart()+3);
+            return true;
+        }
+        else return false;
+    }
 };
 
 class SmallMarket: public Tile {
     bool action(Player& player){
-         if(player.getFabric() >=1 && player.getJewlery() >=1 && player.getSpice() >=1){
-    player.setFabric(player.getFabric()-1);
-    player.setJewlery(player.getJewlery()-1);
-    player.setSpice(player.getSpice()-1);
-    player.setGold(player.getGold()+8);
-    
+         if(player.getFabric() >=1 && player.getJewel() >=1 && player.getSpice() >=1){
+             player.setFabric(player.getFabric()-1);
+             player.setJewel(player.getJewel()-1);
+             player.setSpice(player.getSpice()-1);
+             player.setGold(player.getGold()+8);
+             
     int goldNum = player.getGold();
     int spiceNum = player.getSpice();
-    int rubysNum = player.getRubys();
+    int rubysNum = player.getRuby();
     int fabricNum = player.getFabric();
     int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
     
-    for(itemNum > player.getCart()){
+    while(itemNum > player.getCart()){
                 player.setGold(player.getGold()-1);
                 }
                 return true;
@@ -148,11 +161,11 @@ class SpiceMarket: public Tile {
     
     int goldNum = player.getGold();
     int spiceNum = player.getSpice();
-    int rubysNum = player.getRubys();
+    int rubysNum = player.getRuby();
     int fabricNum = player.getFabric();
     int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
     
-    for(itemNum > player.getCart()){
+    while(itemNum > player.getCart()){
                 player.setGold(player.getGold()-1);
                 } 
                 return true;
@@ -163,18 +176,18 @@ class SpiceMarket: public Tile {
 
 class Jewelrymarket: public Tile {
     bool action(Player& player){
-         if(player.getJewlery() >= 3){
-    player.setJewlery(player.getJewlery()-3);
+         if(player.getJewel() >= 3){
+    player.setJewel(player.getJewel()-3);
     player.setGold(player.getGold()+6);
     
     int goldNum = player.getGold();
     int spiceNum = player.getSpice();
-    int rubysNum = player.getRubys();
+    int rubysNum = player.getRuby();
     int fabricNum = player.getFabric();
     int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
     
-    for(itemNum > player.getCart()){
-                player.setGold(Player::getGold()-1);
+    while(itemNum > player.getCart()){
+                player.setGold(player.getGold()-1);
                 } 
                 return true;
                 }
@@ -183,24 +196,26 @@ class Jewelrymarket: public Tile {
 };
 
 class FabricMarket: public Tile {
-    bool action(Player& player){
-         if(player.getFabric()>=3){
-    player.setFabric(player.getFabric()-3);
-    player.setGold(player.getGold()+6);
+    bool action(Player& player) {
+        if (player.getFabric() >= 3) {
+            player.setFabric(player.getFabric()-3);
+            player.setGold(player.getGold()+6);
     
-    int goldNum = player.getGold();
-    int spiceNum = player.getSpice();
-    int rubysNum = player.getRubys();
-    int fabricNum = player.getFabric();
-    int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
+            int goldNum = player.getGold();
+            int spiceNum = player.getSpice();
+            int rubysNum = player.getRuby();
+            int fabricNum = player.getFabric();
+            int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
     
-    for(itemNum > player.getCart()){
+            while (itemNum > player.getCart()) {
                 player.setGold(player.getGold()-1);
-                } 
-                return true;
-                }
-                else return false;
-                }
+            }
+            return true;
+            
+        } else {
+            return false;
+        }
+    }
 };
 
 class BlackMarket: public Tile {

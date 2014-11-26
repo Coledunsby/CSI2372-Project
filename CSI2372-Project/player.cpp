@@ -8,7 +8,8 @@
 
 #include "player.h"
 
-Player::Player() {
+Player::Player(std::string _name) {
+    name = _name;
     gold = 5;
     ruby = 0;
     spice = 1;
@@ -35,6 +36,10 @@ void Player::eat() {
 
 
 // Getters
+
+std::string Player::getName() const {
+    return name;
+}
 
 int Player::getGold() const {
     return gold;
@@ -65,6 +70,10 @@ int Player::getFood() const {
 }
 
 // Setters
+
+void Player::setName(const std::string newName) {
+    name = newName;
+}
 
 void Player::setGold(const int newGold) {
     gold = newGold;
