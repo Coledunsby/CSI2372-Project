@@ -26,7 +26,6 @@ public:
     bool canAct() const;
     bool pay(Player& player);
     void eat();
-
     
     std::string getName() const;
     int getGold() const;

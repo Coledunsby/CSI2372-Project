@@ -38,7 +38,8 @@ void GameBoard<T, J, R, C>::setPlayer(J player) {
 
 template <class T, class J, const int R, const int C>
 J GameBoard<T, J, R, C>::getPlayer(const std::string &playerName) {
-    
+    J temp("");
+    return temp;
 }
 
 template <class T, class J, const int R, const int C>
@@ -48,12 +49,14 @@ const T& GameBoard<T, J, R, C>::getTile(const std::string &playerName) const {
 
 template <class T, class J, const int R, const int C>
 std::vector<J> GameBoard<T, J, R, C>::getPlayers(const T &tile) const {
-    
+    std::vector<J> temp;
+    return temp;
 }
 
 template <class T, class J, const int R, const int C>
 const T& GameBoard<T, J, R, C>::move(enum Move move, const std::string &playerName) {
-    
+    T *temp = new T;
+    return *temp;
 }
 
 template <class T, class J, const int R, const int C>

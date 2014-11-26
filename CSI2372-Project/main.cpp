@@ -10,6 +10,40 @@
 #include "gameboard.h"
 #include "tile.h"
 
+template <const int N>
+bool takeTurn(GameBoard<Tile, Player, N, N>& bg, const std::string& pName) {
+    try {
+        Move m;
+        std::cin.exceptions(std::istream::failbit);
+        //std::cin >> m;
+        const Tile t = bg.move(m, pName);
+        Player p = bg.getPlayer(pName);
+        if (p.canAct()) {
+            bool makeAction;
+            std::cin >> makeAction;
+            if (makeAction) {
+                std::vector<Player> opL = bg.getPlayers(t);
+                if (p.getGold() >= opL.size()) {
+                    p.eat();
+                    for (auto op : opL) {
+                        //p.pay(op, 1);
+                        bg.setPlayer(op);
+                    }
+                    //t.action(p);
+                    bg.setPlayer(p);
+                }
+            }
+        }
+        return true;
+    } catch (std::istream::failure e) {
+        std::cout << "Incorrect key pressed";
+        std::cin.clear();
+    } catch (std::out_of_range e) {
+        std::cout << e.what();
+    }
+    return false;
+}
+
 int main(int argc, const char * argv[]) {
     
     Player player1("A"), player2("B");
@@ -31,66 +65,10 @@ int main(int argc, const char * argv[]) {
     for (int i = 0; i < players.size(); i++) {
         do {
             std::cout << players[i].getName();
-        } while (!takeTurn(bg, players[i]));
+        } while (!takeTurn(bg, players[i].getName()));
         
-        if (bg.win(players[i]) break;
+        //if (bg.win(players[i]) break;
     }
-    
-//Translated Pseudo Code
-
-if(isPaused){
-             isPaused = false;
-             }
-else
-    cin >> playerNumber; //??
-    for
-    (int i = 0; i < playerNumber; i++){
-    cin >> playerName;
-}
-while (
-    
-
-
-
-
-
-//Given Code
-
-template <cons int N>
-bool takeTurn( BoardGame<Tile,Player,N,N>&bg, conststd::string&pName ) {
-try {
-    Move m;
-    cin.exceptions(std::istream::failbit);
-    cin>> m;
-    const Tile t = bg.move( m, pName );
-    Player p = bg.getPlayer( pName );
-    if (p.canAct()) {
-       bool makeAction;
-       cin>>makeAction;
-       if ( makeAction )
-          std::vector<Player> opL = bg.getPlayers( t );
-          if (p.getGold()>= opL.size()) {
-             p.eat();
-             for ( auto op : opL ) {
-             p.pay( op, 1 );
-             bg.setPlayer( op );
-             }
-          t.action( p );
-          bg.setPlayer( p );
-          }
-          }
-          }
-       retrun true;
-} catch ( std::istream::failure e ) {
-  cout<< “Incorrect key pressed”; cin.clear(); }
-} catch ( std::out_of_range e ) {
-  cout<< e.what();
-return false;
-} 
-
-
-
    
     return 0;
 }
-
