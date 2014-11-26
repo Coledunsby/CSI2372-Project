@@ -10,6 +10,8 @@
 #include "gameboard.h"
 #include "tile.h"
 
+using namespace std;
+
 int main(int argc, const char * argv[]) {
     
     Player player1, player2;
@@ -35,13 +37,38 @@ if(isPaused){
              isPaused = false;
              }
 else
-    cin >> playerNumber; //??
+    cin >> numberOfPlayers; //??
     for
-    (int i = 0; i < playerNumber; i++){
-    cin >> playerName;
+    (int i = 0; i < numberOfPlayers; i++){
+    cin >> pName;
 }
-while (
-    
+while (bg.win(pName)){
+      if(isPaused){
+                   isPaused = false;
+                   }
+      for(int i = 0; i < numberOfPlayers; i++){
+      cout << "Player " << i+1 << "You have " <<player[i].getGold() << " gold, " <<player[i].getRuby() << " rubys, " <<player[i].getSpice() << " spice, " <<player[i].getFabric() << " fabric, " <<player[i].getFabric() << " jewels, " <<player[i].getCart() << " cart capactiy and " <<player[i].getFood() << " food." << endl;
+      while(/*move is not valid*/){
+                   //input move
+                   }
+                   gameboard.move(/*move*/, player[i]);
+                   if(player[i].canAct()){
+                                          gameboard.getTile(player[i]);
+                                          if(/*player chooses action*/ && tile.action(player[i])){
+                                                      if(/*tile is occupied*/){
+                                                                player[i].pay(gameboard.getPlayer()/*?*/);
+                                                                }
+                                                                
+                                          }
+                                          
+        cout << "Player " << i+1 << "You have " <<player[i].getGold() << " gold, " <<player[i].getRuby() << " rubys, " <<player[i].getSpice() << " spice, " <<player[i].getFabric() << " fabric, " <<player[i].getFabric() << " jewels, " <<player[i].getCart() << " cart capactiy and " <<player[i].getFood() << " food." << endl;
+        if(player[i].getRuby() == 5){
+                               //has won
+                               }
+                               }          
+                                          
+      }
+      
 
 
 
