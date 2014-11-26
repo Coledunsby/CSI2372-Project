@@ -10,6 +10,7 @@
 #define __CSI2372_Project__tile__
 
 #include <stdio.h>
+#include <math.h>
 #include <iostream>
 #include "player.h"
 
@@ -25,10 +26,19 @@ public:
 };
 
 class TileFactory {
+    int tiles;
+    int nType;
     
 public:
     TileFactory(int _nTiles) {
+        tiles = _nTiles;
+        nType = floor(tiles / 14);
         
+        //std::vector<Tile> tileOrder;
+        
+        for (int i = 0; i < tiles; i++) {
+            
+        }
     }
     
     static TileFactory *get(int _nTiles) {

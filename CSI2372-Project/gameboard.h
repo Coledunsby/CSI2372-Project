@@ -13,9 +13,10 @@
 #include <vector>
 #include <iostream>
 
+enum class Move { Up, Down, Left, Right };
+
 template <class T, class J, const int R, const int C>
 class GameBoard {
-    enum class Move { Up, Down, Left, Right };
     
 public:
     GameBoard();
