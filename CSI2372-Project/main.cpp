@@ -36,6 +36,61 @@ int main(int argc, const char * argv[]) {
         if (bg.win(players[i]) break;
     }
     
+//Translated Pseudo Code
+
+if(isPaused){
+             isPaused = false;
+             }
+else
+    cin >> playerNumber; //??
+    for
+    (int i = 0; i < playerNumber; i++){
+    cin >> playerName;
+}
+while (
+    
+
+
+
+
+
+//Given Code
+
+template <cons int N>
+bool takeTurn( BoardGame<Tile,Player,N,N>&bg, conststd::string&pName ) {
+try {
+    Move m;
+    cin.exceptions(std::istream::failbit);
+    cin>> m;
+    const Tile t = bg.move( m, pName );
+    Player p = bg.getPlayer( pName );
+    if (p.canAct()) {
+       bool makeAction;
+       cin>>makeAction;
+       if ( makeAction )
+          std::vector<Player> opL = bg.getPlayers( t );
+          if (p.getGold()>= opL.size()) {
+             p.eat();
+             for ( auto op : opL ) {
+             p.pay( op, 1 );
+             bg.setPlayer( op );
+             }
+          t.action( p );
+          bg.setPlayer( p );
+          }
+          }
+          }
+       retrun true;
+} catch ( std::istream::failure e ) {
+  cout<< “Incorrect key pressed”; cin.clear(); }
+} catch ( std::out_of_range e ) {
+  cout<< e.what();
+return false;
+} 
+
+
+
+   
     return 0;
 }
 

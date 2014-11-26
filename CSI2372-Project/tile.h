@@ -137,7 +137,7 @@ class SmallMarket: public Tile {
              player.setJewel(player.getJewel()-1);
              player.setSpice(player.getSpice()-1);
              player.setGold(player.getGold()+8);
-    
+             
     int goldNum = player.getGold();
     int spiceNum = player.getSpice();
     int rubysNum = player.getRuby();
