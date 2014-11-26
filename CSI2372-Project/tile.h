@@ -17,6 +17,7 @@ class Tile {
     
     
 public:
+    Tile();
     bool operator==(const Tile &t);
     virtual bool action(Player& player);
     virtual Tile* clone();
@@ -83,6 +84,9 @@ class Casino: public Tile {
 };
 
 class GemMerchant: public Tile {
+    int previousBuyers;
+    
+    GemMerchant();
     bool action(Player& player);
 };
 
