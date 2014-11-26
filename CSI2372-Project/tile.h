@@ -44,7 +44,9 @@ class Restaurant: public Tile {
 };
 
 class SpiceMerchant: public Tile {
-    bool action(Player& player);
+    bool action(Player& player){
+         if(player.getGold() >=2){
+                             
     player.setGold(player.getGold()-2);
     player.setSpice(player.getSpice()+3);
     int goldNum = player.getGold();
@@ -55,11 +57,16 @@ class SpiceMerchant: public Tile {
     
     for (itemNum > player.getCart()){
                 player.setSpice(player.getSpice()-1);
-                }   
+                } 
+                return true;
+                }
+                else return false;
+                } 
 };
 
 class FabricManufacturer: public Tile {
-    bool action(Player& player);
+    bool action(Player& player){
+         if(player.getGold() >= 2){
     player.setGold(player.getGold()-2);
     player.setFabric(player.getFabric()+3);
     
@@ -72,10 +79,15 @@ class FabricManufacturer: public Tile {
     for (itemNum > player.getCart()){
                 player.setFabric(player.getFabric()-1);
                 }
+                return true;
+                }
+                else return false;
+                }
 };
 
 class Jeweler: public Tile {
-    bool action(Player& player);
+    bool action(Player& player){
+         if(player.getGold() >=2){
     player.setGold(player.getGold()-2);
     player.setJewlery(player.getJewlery()+3);
     
@@ -88,16 +100,26 @@ class Jeweler: public Tile {
     for (itemNum > player.getCart()){
                 player.setJewlery(player.getJewlery()-1);
                 }
+                return true;
+                }
+                else return false;
+                }
 };
 
 class CartManufacturer: public Tile {
     bool action(Player& player);
+    if(player.getGold() >= 7){
+                        
     player.setGold(player.getGold()-7);
     player.setCart(player.getCart()+3);
+    return true;
+}
+else return false;
 };
 
 class SmallMarket: public Tile {
-    bool action(Player& player);
+    bool action(Player& player){
+         if(player.getFabric() >=1 && player.getJewlery() >=1 && player.getSpice() >=1){
     player.setFabric(player.getFabric()-1);
     player.setJewlery(player.getJewlery()-1);
     player.setSpice(player.getSpice()-1);
@@ -111,11 +133,16 @@ class SmallMarket: public Tile {
     
     for(itemNum > player.getCart()){
                 player.setGold(player.getGold()-1);
-                }    
+                }
+                return true;
+                }
+                else return false;  
+                }  
 };
 
 class SpiceMarket: public Tile {
-    bool action(Player& player);
+    bool action(Player& player){
+         if(player.getSpice() >=3){
     player.setSpice(player.getSpice()-3);
     player.setGold(player.getGold()+6);
     
@@ -128,10 +155,15 @@ class SpiceMarket: public Tile {
     for(itemNum > player.getCart()){
                 player.setGold(player.getGold()-1);
                 } 
+                return true;
+                } 
+                else return false;
+                }
 };
 
 class Jewelrymarket: public Tile {
-    bool action(Player& player);
+    bool action(Player& player){
+         if(player.getJewlery() >= 3){
     player.setJewlery(player.getJewlery()-3);
     player.setGold(player.getGold()+6);
     
@@ -144,10 +176,15 @@ class Jewelrymarket: public Tile {
     for(itemNum > player.getCart()){
                 player.setGold(Player::getGold()-1);
                 } 
+                return true;
+                }
+                else return false;
+                }
 };
 
 class FabricMarket: public Tile {
-    bool action(Player& player);
+    bool action(Player& player){
+         if(player.getFabric()>=3){
     player.setFabric(player.getFabric()-3);
     player.setGold(player.getGold()+6);
     
@@ -160,6 +197,9 @@ class FabricMarket: public Tile {
     for(itemNum > player.getCart()){
                 player.setGold(player.getGold()-1);
                 } 
+                return true;
+                }
+                else return false;
 };
 
 class BlackMarket: public Tile {
