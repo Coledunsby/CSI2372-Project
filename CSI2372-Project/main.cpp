@@ -73,6 +73,14 @@ int main(int argc, const char * argv[]) {
     }
     
     //Translated Pseudo Code
+    
+    public bool moveIsValid(Player &player, String m){
+           if(m 
+           }
+    
+    bool isPaused = false;
+    int choseAction = 0;
+    
 
     if (isPaused) {
         isPaused = false;
@@ -80,31 +88,34 @@ int main(int argc, const char * argv[]) {
     else {
         cin >> numberOfPlayers; //??
         for (int i = 0; i < numberOfPlayers; i++) {
-            cin >> pName;
+            cin >> player[i].setName();
         }
-        while (bg.win(pName)) {
+        bool hasWon = false;
+             
+        while (!hasWon) {
             if (isPaused) {
                    isPaused = false;
             }
-            for (int i = 0; i < numberOfPlayers; i++){
-                cout << "Player " << i+1 << "You have " <<player[i].getGold() << " gold, " << player[i].getRuby() << " rubys, " << player[i].getSpice() << " spice, " << player[i].getFabric() << " fabric, " << player[i].getFabric() << " jewels, " << player[i].getCart() << " cart capactiy and " <<player[i].getFood() << " food." << endl;
-                while (/*move is not valid*/) {
-                   //input move
+            for (int i = 1; i < numberOfPlayers; i++){
+                cout << "Player " << i << "You have " <<player[i].getGold() << " gold, " << player[i].getRuby() << " rubys, " << player[i].getSpice() << " spice, " << player[i].getFabric() << " fabric, " << player[i].getFabric() << " jewels, " << player[i].getCart() << " cart capactiy and " <<player[i].getFood() << " food." << endl;
+                while (!moveIsValid(player[i])) {
+                   cin << m
                 }
-                gameboard.move(/*move*/, player[i]);
+                gameboard.move(Move, player[i]);
                 if (player[i].canAct()) {
                     gameboard.getTile(player[i]);
-                    if (/*player chooses action*/ && tile.action(player[i])) {
+                    cout<< "Type 1 for yes or 2 for no" << endl;
+                    cin << choseAction;
+                    if (choseAction == 1 && tile.action(player[i])) {
                         if(/*tile is occupied*/) {
-                            player[i].pay(gameboard.getPlayer()/*?*/);
+                            player[i].pay(gameboard.getPlayer());
                         }
                     }
                                           
-                    cout << "Player " << i+1 << "You have " <<player[i].getGold() << " gold, " <<player[i].getRuby() << " rubys, " <<player[i].getSpice() << " spice, " <<player[i].getFabric() << " fabric, " <<player[i].getFabric() << " jewels, " <<player[i].getCart() << " cart capactiy and " <<player[i].getFood() << " food." << endl;
+                    cout << "Player " << i << "You have " <<player[i].getGold() << " gold, " <<player[i].getRuby() << " rubys, " <<player[i].getSpice() << " spice, " <<player[i].getFabric() << " fabric, " <<player[i].getFabric() << " jewels, " <<player[i].getCart() << " cart capactiy and " <<player[i].getFood() << " food." << endl;
                     
                     if (player[i].getRuby() == 5) {
-                               //has won
-
+                               hasWon = true;
                     }
                 }
             }
