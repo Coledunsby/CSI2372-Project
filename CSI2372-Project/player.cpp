@@ -8,7 +8,7 @@
 
 #include "player.h"
 
-Player::Player(std::string _name) {
+Player::Player(string _name) {
     name = _name;
     gold = 5;
     ruby = 0;
@@ -24,7 +24,13 @@ bool Player::canAct() const {
 }
 
 bool Player::pay(Player &player) {
-    return true;
+    if (gold >= 1) {
+        gold--;
+        player.gold++;
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void Player::eat() {
@@ -33,11 +39,26 @@ void Player::eat() {
     }
 }
 
+int Player::emptySpace() {
+    return cart - (spice + fabric + jewel + ruby);
+}
 
+ostream &operator<<(ostream &output, const Player &player) {
+    cout << player.name << endl;
+    cout << "Gold: " << player.gold << endl;
+    cout << "Rubies: " << player.ruby << endl;
+    cout << "Spices: " << player.spice << endl;
+    cout << "Fabric: " << player.fabric << endl;
+    cout << "Jewels: " << player.jewel << endl;
+    cout << "Cart: " << player.cart << endl;
+    cout << "Food: " << player.food << endl;
+    
+    return output;
+}
 
 // Getters
 
-std::string Player::getName() const {
+string Player::getName() const {
     return name;
 }
 
@@ -71,7 +92,7 @@ int Player::getFood() const {
 
 // Setters
 
-void Player::setName(const std::string newName) {
+void Player::setName(const string newName) {
     name = newName;
 }
 

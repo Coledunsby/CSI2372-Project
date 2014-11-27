@@ -27,3 +27,7 @@ bool Tile::action(Player &player) {
 Tile* Tile::clone() {
     return nullptr;
 }
+
+string Tile::getType() {
+    return "Tile";
+}

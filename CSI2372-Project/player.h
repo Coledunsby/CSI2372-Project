@@ -9,10 +9,13 @@
 #ifndef __CSI2372_Project__player__
 #define __CSI2372_Project__player__
 
+#include <iostream>
 #include <string>
 
+using namespace std;
+
 class Player {
-    std::string name;
+    string name;
     int gold;
     int ruby;
     int spice;
@@ -22,12 +25,15 @@ class Player {
     int food;
     
 public:
-    Player(std::string _name);
+    Player(string _name);
     bool canAct() const;
     bool pay(Player& player);
     void eat();
+    int emptySpace();
+    friend ostream &operator<<(ostream &output, const Player &player);
     
-    std::string getName() const;
+    // Getters
+    string getName() const;
     int getGold() const;
     int getRuby() const;
     int getSpice() const;
@@ -36,7 +42,8 @@ public:
     int getCart() const;
     int getFood() const;
     
-    void setName(const std::string newName);
+    // Setters
+    void setName(const string newName);
     void setGold(const int newGold);
     void setRuby(const int newRuby);
     void setSpice(const int newSpice);

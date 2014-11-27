@@ -11,24 +11,29 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include <iostream>
 
-enum class Move { Up, Down, Left, Right };
+using namespace std;
+
+enum class Move { UP, DOWN, LEFT, RIGHT };
 
 template <class T, class J, const int R, const int C>
 class GameBoard {
+    map<string, J> players;
+    T tiles[R][C];
     
 public:
     GameBoard();
-    GameBoard(std::vector<J> players);
-    void add(const T& tile, int row, int col);
-    const T& getTile(int row, int col) const;
-    void getCoordinate(const T &tile, int *row, int *col) const;
+    void addPlayer(J player, string name);
     void setPlayer(J player);
-    J getPlayer(const std::string& playerName);
-    const T& getTile(const std::string& playerName) const;
-    std::vector<J> getPlayers(const T& tile) const;
-    const T& move(enum Move move, const std::string& playerName);
+    J getPlayer(const string& playerName);
+    void addTile(const T& tile, int row, int col);
+    void getCoordinate(const T &tile, int *row, int *col) const;
+    vector<J> getPlayers(const T& tile) const;
+    const T& getTile(int row, int col) const;
+    const T& getTile(const string& playerName) const;
+    const T& move(enum Move move, const string& playerName);
     void draw() const;
 };
 

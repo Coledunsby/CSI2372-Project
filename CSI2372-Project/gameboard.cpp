@@ -12,23 +12,8 @@ GameBoard<T, J, R, C>::GameBoard() {
 }
 
 template <class T, class J, const int R, const int C>
-GameBoard<T, J, R, C>::GameBoard(std::vector<J> players) {
-    
-}
-
-template <class T, class J, const int R, const int C>
-void GameBoard<T, J, R, C>::add(const T& tile, int row, int col) {
-    
-}
-
-template <class T, class J, const int R, const int C>
-const T& GameBoard<T, J, R, C>::getTile(int row, int col) const {
-    
-}
-
-template <class T, class J, const int R, const int C>
-void GameBoard<T, J, R, C>::getCoordinate(const T &tile, int *row, int *col) const {
-    
+void GameBoard<T, J, R, C>::addPlayer(J player, string name) {
+    players[name] = player;
 }
 
 template <class T, class J, const int R, const int C>
@@ -37,24 +22,38 @@ void GameBoard<T, J, R, C>::setPlayer(J player) {
 }
 
 template <class T, class J, const int R, const int C>
-J GameBoard<T, J, R, C>::getPlayer(const std::string &playerName) {
-    J temp("");
-    return temp;
+J GameBoard<T, J, R, C>::getPlayer(const string &playerName) {
+    return players[playerName];
 }
 
 template <class T, class J, const int R, const int C>
-const T& GameBoard<T, J, R, C>::getTile(const std::string &playerName) const {
+void GameBoard<T, J, R, C>::addTile(const T& tile, int row, int col) {
+    tiles[row][col] = tile;
+}
+
+template <class T, class J, const int R, const int C>
+void GameBoard<T, J, R, C>::getCoordinate(const T &tile, int *row, int *col) const {
     
 }
 
 template <class T, class J, const int R, const int C>
-std::vector<J> GameBoard<T, J, R, C>::getPlayers(const T &tile) const {
-    std::vector<J> temp;
+vector<J> GameBoard<T, J, R, C>::getPlayers(const T &tile) const {
+    vector<J> temp;
     return temp;
 }
 
 template <class T, class J, const int R, const int C>
-const T& GameBoard<T, J, R, C>::move(enum Move move, const std::string &playerName) {
+const T& GameBoard<T, J, R, C>::getTile(int row, int col) const {
+    return tiles[row][col];
+}
+
+template <class T, class J, const int R, const int C>
+const T& GameBoard<T, J, R, C>::getTile(const string &playerName) const {
+    
+}
+
+template <class T, class J, const int R, const int C>
+const T& GameBoard<T, J, R, C>::move(enum Move move, const string &playerName) {
     T *temp = new T;
     return *temp;
 }
@@ -63,8 +62,8 @@ template <class T, class J, const int R, const int C>
 void GameBoard<T, J, R, C>::draw() const {
     for (int r = 0; r < R; r++) {
         for (int c = 0; c < C; c++) {
-            std::cout << "[" << r << "," << c << "]";
+            cout << "[" << r << "," << c << "]";
         }
-        std::cout << std::endl;
+        cout << endl;
     }
 }

@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
+#include <vector>
 #include "player.h"
 
 class Tile {
@@ -22,220 +23,176 @@ public:
     bool operator==(const Tile &t);
     virtual bool action(Player& player);
     virtual Tile* clone();
+    virtual string getType();
     //ostream& operator<<;
 };
 
-class TileFactory {
-    int tiles;
-    int nType;
-    
-public:
-    TileFactory(int _nTiles) {
-        tiles = _nTiles;
-        nType = floor(tiles / 14);
-        
-        //std::vector<Tile> tileOrder;
-        
-        for (int i = 0; i < tiles; i++) {
-            
-        }
-    }
-    
-    static TileFactory *get(int _nTiles) {
-        static TileFactory tf(_nTiles);
-        return &tf;
-    }
-    
-    Tile& next() {
-        Tile *tile = new Tile();
-        return *tile;
-    }
-};
-
 class Desert: public Tile {
-    
+public:
+    string getType() {
+        return "Desert";
+    }
 };
 
 class Restaurant: public Tile {
+public:
     bool action(Player& player) {
         player.setFood(10);
         return true;
     }
+    
+    string getType() {
+        return "Restaurant";
+    }
 };
 
 class SpiceMerchant: public Tile {
+public:
     bool action(Player& player) {
         if (player.getGold() >= 2) {
-             
             player.setGold(player.getGold() - 2);
-            player.setSpice(player.getSpice() + 3);
-            int goldNum = player.getGold();
-            int spiceNum = player.getSpice();
-            int rubysNum = player.getRuby();
-            int fabricNum = player.getFabric();
-            int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
-            
-            while (itemNum > player.getCart()) {
-                player.setSpice(player.getSpice() - 1);
-            }
-            
+            player.setSpice(player.getSpice() + std::min(player.emptySpace(), 3));
             return true;
         } else {
             return false;
         }
+    }
+    
+    string getType() {
+        return "Spice Merchant";
     }
 };
 
 class FabricManufacturer: public Tile {
-    bool action(Player& player){
-         if(player.getGold() >= 2){
-    player.setGold(player.getGold()-2);
-    player.setFabric(player.getFabric()+3);
-    
-    int goldNum = player.getGold();
-    int spiceNum = player.getSpice();
-    int rubysNum = player.getRuby();
-    int fabricNum = player.getFabric();
-    int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
-    
-    while (itemNum > player.getCart()){
-                player.setFabric(player.getFabric()-1);
-                }
-                return true;
-                }
-                else return false;
-                }
-};
-
-class Jeweler: public Tile {
-    bool action(Player& player){
-         if(player.getGold() >=2){
-    player.setGold(player.getGold()-2);
-    player.setJewel(player.getJewel()+3);
-    
-    int goldNum = player.getGold();
-    int spiceNum = player.getSpice();
-    int rubysNum = player.getRuby();
-    int fabricNum = player.getFabric();
-    int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
-    
-    while (itemNum > player.getCart()){
-                player.setJewel(player.getJewel()-1);
-                }
-                return true;
-                }
-                else return false;
-                }
-};
-
-class CartManufacturer: public Tile {
+public:
     bool action(Player& player) {
-        if(player.getGold() >= 7){
-            
-            player.setGold(player.getGold()-7);
-            player.setCart(player.getCart()+3);
+        if (player.getGold() >= 2) {
+            player.setGold(player.getGold() - 2);
+            player.setFabric(player.getFabric() + std::min(player.emptySpace(), 3));
             return true;
-        }
-        else return false;
-    }
-};
-
-class SmallMarket: public Tile {
-    bool action(Player& player){
-         if(player.getFabric() >=1 && player.getJewel() >=1 && player.getSpice() >=1){
-             player.setFabric(player.getFabric()-1);
-             player.setJewel(player.getJewel()-1);
-             player.setSpice(player.getSpice()-1);
-             player.setGold(player.getGold()+8);
-             
-    int goldNum = player.getGold();
-    int spiceNum = player.getSpice();
-    int rubysNum = player.getRuby();
-    int fabricNum = player.getFabric();
-    int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
-    
-    while(itemNum > player.getCart()){
-                player.setGold(player.getGold()-1);
-                }
-                return true;
-                }
-                else return false;  
-                }  
-};
-
-class SpiceMarket: public Tile {
-    bool action(Player& player){
-         if(player.getSpice() >=3){
-    player.setSpice(player.getSpice()-3);
-    player.setGold(player.getGold()+6);
-    
-    int goldNum = player.getGold();
-    int spiceNum = player.getSpice();
-    int rubysNum = player.getRuby();
-    int fabricNum = player.getFabric();
-    int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
-    
-    while(itemNum > player.getCart()){
-                player.setGold(player.getGold()-1);
-                } 
-                return true;
-                } 
-                else return false;
-                }
-};
-
-class Jewelrymarket: public Tile {
-    bool action(Player& player){
-         if(player.getJewel() >= 3){
-    player.setJewel(player.getJewel()-3);
-    player.setGold(player.getGold()+6);
-    
-    int goldNum = player.getGold();
-    int spiceNum = player.getSpice();
-    int rubysNum = player.getRuby();
-    int fabricNum = player.getFabric();
-    int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
-    
-    while(itemNum > player.getCart()){
-                player.setGold(player.getGold()-1);
-                } 
-                return true;
-                }
-                else return false;
-                }
-};
-
-class FabricMarket: public Tile {
-    bool action(Player& player) {
-        if (player.getFabric() >= 3) {
-            player.setFabric(player.getFabric()-3);
-            player.setGold(player.getGold()+6);
-    
-            int goldNum = player.getGold();
-            int spiceNum = player.getSpice();
-            int rubysNum = player.getRuby();
-            int fabricNum = player.getFabric();
-            int itemNum = goldNum + spiceNum + rubysNum + fabricNum;
-    
-            while (itemNum > player.getCart()) {
-                player.setGold(player.getGold()-1);
-            }
-            return true;
-            
         } else {
             return false;
         }
     }
+    
+    string getType() {
+        return "Fabric Manufacturer";
+    }
+};
+
+class Jeweler: public Tile {
+public:
+    bool action(Player& player) {
+        if (player.getGold() >= 2) {
+            player.setGold(player.getGold() - 2);
+            player.setJewel(player.getJewel() + std::min(player.emptySpace(), 3));
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    string getType() {
+        return "Jeweler";
+    }
+};
+
+class CartManufacturer: public Tile {
+public:
+    bool action(Player& player) {
+        if (player.getGold() >= 7) {
+            player.setGold(player.getGold() - 7);
+            player.setCart(player.getCart() + 3);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    string getType() {
+        return "Cart Manufacturer";
+    }
+};
+
+class SmallMarket: public Tile {
+public:
+    bool action(Player& player) {
+        if (player.getFabric() >= 1 && player.getJewel() >= 1 && player.getSpice() >= 1) {
+            player.setFabric(player.getFabric() - 1);
+            player.setJewel(player.getJewel() - 1);
+            player.setSpice(player.getSpice() - 1);
+            player.setGold(player.getGold() + 8);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    string getType() {
+        return "Small Market";
+    }
+};
+
+class SpiceMarket: public Tile {
+public:
+    bool action(Player& player) {
+        if (player.getSpice() >= 3) {
+            player.setSpice(player.getSpice() - 3);
+            player.setGold(player.getGold() + 6);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    string getType() {
+        return "Spice Market";
+    }
+};
+
+class JewelryMarket: public Tile {
+public:
+    bool action(Player& player) {
+        if (player.getJewel() >= 3) {
+            player.setJewel(player.getJewel() - 3);
+            player.setGold(player.getGold() + 6);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    string getType() {
+        return "Jewelry Market";
+    }
+};
+
+class FabricMarket: public Tile {
+public:
+    bool action(Player& player) {
+        if (player.getFabric() >= 3) {
+            player.setFabric(player.getFabric() - 3);
+            player.setGold(player.getGold() + 6);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    string getType() {
+        return "Fabric Market";
+    }
 };
 
 class BlackMarket: public Tile {
+public:
     bool action(Player& player) {
-        if (player.getGold() >= 1) {
-            srand(static_cast<unsigned int>(time(0)));
-            int randNum = std::rand() % 5;
+        if (player.getGold() >= 1 && player.emptySpace() > 0) {
+            srand(unsigned(time(0)));
+            int randNum = rand() % 5;
             
-            while (randNum > 0 && (player.getSpice() + player.getFabric() + player.getJewel() + player.getRuby() < player.getCart())) {
-                int goodType = std::rand() % 4;
+            while (randNum > 0 && player.emptySpace() > 0) {
+                int goodType = rand() % 4;
                 
                 // Random number between 0 and 3
                 // 0 = spice
@@ -261,13 +218,18 @@ class BlackMarket: public Tile {
             return false;
         }
     }
+    
+    string getType() {
+        return "Black Market";
+    }
 };
 
 class Casino: public Tile {
+public:
     bool action(Player& player) {
         if (player.getGold() >= 1) {
-            srand(static_cast<unsigned int>(time(0)));
-            int randNum = std::rand() % 10 + 1;
+            srand(unsigned(time(0)));
+            int randNum = rand() % 10 + 1;
             int winnings = 0;
             
             // Random number between 1 and 10
@@ -297,29 +259,39 @@ class Casino: public Tile {
             return false;
         }
     }
+    
+    string getType() {
+        return "Casino";
+    }
 };
 
 class GemMerchant: public Tile {
     int previousBuyers;
     
+public:
     GemMerchant() {
         previousBuyers = 0;
     }
     
     bool action(Player& player) {
         int cost = 12 + previousBuyers;
-        if (player.getGold() >= cost) {
-            previousBuyers++;
+        if (player.getGold() >= cost && player.emptySpace() > 0) {
             player.setGold(player.getGold() - cost);
             player.setRuby(player.getRuby() + 1);
+            previousBuyers++;
             return true;
         } else {
             return false;
         }
     }
+    
+    string getType() {
+        return "Gem Merchant";
+    }
 };
 
 class Palace: public Tile {
+public:
     bool action(Player& player) {
         if (player.getFabric() >= 5 && player.getJewel() >= 5 && player.getSpice() >= 5) {
             player.setFabric(player.getFabric() - 5);
@@ -330,6 +302,72 @@ class Palace: public Tile {
         } else {
             return false;
         }
+    }
+    
+    string getType() {
+        return "Palace";
+    }
+};
+
+class TileFactory {
+    std::vector<Tile> tiles;
+    int nTiles;
+    int nType;
+    int index;
+    
+public:
+    TileFactory(int _nTiles) {
+        nTiles = _nTiles;
+        nType = floor(nTiles / 14);
+        index = -1;
+        
+        for (int i = 0; i < nType; i++) {
+            Restaurant restaurantTile;
+            SpiceMerchant spiceMerchantTile;
+            FabricManufacturer fabricManufacturerTile;
+            Jeweler jewelerTile;
+            CartManufacturer cartManufacturerTile;
+            SmallMarket smallMarketTile;
+            SpiceMarket spiceMarketTile;
+            JewelryMarket jewelryMarketTile;
+            FabricMarket fabricMarketTile;
+            BlackMarket blackMarketTile;
+            Casino casinoTile;
+            GemMerchant gemMerchantTile;
+            Palace palaceTile;
+            
+            tiles.push_back(restaurantTile);
+            tiles.push_back(spiceMerchantTile);
+            tiles.push_back(fabricManufacturerTile);
+            tiles.push_back(jewelerTile);
+            tiles.push_back(cartManufacturerTile);
+            tiles.push_back(smallMarketTile);
+            tiles.push_back(spiceMarketTile);
+            tiles.push_back(jewelryMarketTile);
+            tiles.push_back(fabricMarketTile);
+            tiles.push_back(blackMarketTile);
+            tiles.push_back(casinoTile);
+            tiles.push_back(gemMerchantTile);
+            tiles.push_back(palaceTile);
+        }
+        
+        while (tiles.size() < nTiles) {
+            Desert desertTile;
+            tiles.push_back(desertTile);
+        }
+        
+        srand(unsigned(time(0)));
+        random_shuffle(tiles.begin(), tiles.end());
+    }
+    
+    static TileFactory *get(int _nTiles) {
+        static TileFactory tf(_nTiles);
+        return &tf;
+    }
+    
+    Tile& next() {
+        index++;
+        return tiles[index];
     }
 };
 
