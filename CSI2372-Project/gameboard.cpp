@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Cole Dunsby. All rights reserved.
 //
 
+using namespace std;
+
 template <class T, class J, const int R, const int C>
 GameBoard<T, J, R, C>::GameBoard() {
     
@@ -33,13 +35,35 @@ void GameBoard<T, J, R, C>::addTile(const T& tile, int row, int col) {
 
 template <class T, class J, const int R, const int C>
 void GameBoard<T, J, R, C>::getCoordinate(const T &tile, int *row, int *col) const {
-    
+    int rowNumber = 0;
+    for(int i = 0; i < 6; i++){
+              int colNumber = 0;
+              for(int j = 0; j < 6; j++){
+                       if(*j == tile){
+                              *row = rowNumber;
+                              *col = colNumber;
+                              break;
+                              }
+                              colNumber++;
+                              }
+                              rowNumber++;
+                              }                                                             
 }
 
 template <class T, class J, const int R, const int C>
 vector<J> GameBoard<T, J, R, C>::getPlayers(const T &tile) const {
-    vector<J> temp;
-    return temp;
+int colNum = 0;
+    for (int i = 0; i < 6; i++) {
+        int rowNum = 0;
+        for (int j = 0; j < 6 ; j++) {
+            if (*j == tile) {
+                return players[colNum][rowNum];
+                break;
+            }
+                rowNum++;
+        }
+        colNum++;
+    }
 }
 
 template <class T, class J, const int R, const int C>
@@ -49,13 +73,71 @@ const T& GameBoard<T, J, R, C>::getTile(int row, int col) const {
 
 template <class T, class J, const int R, const int C>
 const T& GameBoard<T, J, R, C>::getTile(const string &playerName) const {
-    
+    int columNumber = 0;
+    for(int i = 0; i < 6; i++){
+              int rowNumber = 0;
+              for(int j = 0; j < 6; j++){
+                       if(*j == tile){
+                              return players[rowNumber][columNumber];
+                              break;
+                              }
+                              rowNumber++;
+                              }
+                              columNumber++;
+                              }
 }
 
 template <class T, class J, const int R, const int C>
 const T& GameBoard<T, J, R, C>::move(enum Move move, const string &playerName) {
-    T *temp = new T;
-    return *temp;
+    //T *temp = new T;
+    //return *temp;
+    int rNum = 0;
+    int rowofplayer = 0;
+    int colofplayer = 0;
+    const Player * thisPlayer;
+    for (<vector<Player>::const_iterator i = players.begin(); i != players.end(); ++i) {
+        int cNum = 0;
+        for (<vector<Player>::const_iterator i2 = i->begin(); i2 != i->end(); ++i) {
+            for (vector<Player>::const_iterator i3 = i2->begin(); i3 != i2->end(); ++i3) {
+                if (i3->nameOfPlayer == playerName) {
+                    thisPlayer = &*i3;
+
+                            if (playerRow != 0) {
+                                players[rowofplayer - 1][colofplayer].push_back(*new Player(*thisPlayer));
+                                players[rowofplayer][colofplayer].erase(i3);
+                                return tiles[rowofplayer - 1][colofplayer];
+                            } //print cant move there
+                            
+                             else if (players[0].begin() + colofplayer != players[0].end() - 1) {
+                                players[rowofplayer][colofplayer + 1].push_back(*new Player(*thisPlayer));
+                                players[rowofplayer][colofplayer].erase(i3);
+                                return tiles[rowofplayer][colofplayer + 1];
+                            } //print cant move there
+                         
+                            else if (playerCol != 0) {
+                                players[rowofplayer][colofplayer - 1].push_back(*new Player(*thisPlayer));
+                                players[rowofplayer][colofplayer].erase(i3);
+                                return tiles[playerRow][colofplayer - 1];
+                            } //print cant move there
+                         
+                            else if (players.begin() + colofplayer != players.end() - 1) {
+                                players[rowofplayer + 1][colofplayer].push_back(*new Player(*thisPlayer));
+                                players[rowofplayer][colofplayer].erase(i3);
+                                return tiles[playerRow + 1][colofplayer];
+                            } //print cant move there
+                           
+                      
+                            return tiles[rowofplayer][colofplayer];
+                    }
+
+                    }
+                }
+                colNum++;
+            }
+        rowNum++;
+        }
+    }
+
 }
 
 template <class T, class J, const int R, const int C>
