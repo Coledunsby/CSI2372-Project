@@ -28,6 +28,8 @@ public:
     virtual Tile* clone();
     virtual string getType() const = 0;
     //ostream& operator<<;
+    void addPlayer(Player& player);
+    void removePlayer(Player& player);
     
     // Getters
     int getIdentifier() const;
@@ -35,7 +37,6 @@ public:
     
     // Setters
     void setIdentifier(const int newIdentifier);
-    void setPlayers(const vector<Player> newPlayers);
 };
 
 class Desert: public Tile {

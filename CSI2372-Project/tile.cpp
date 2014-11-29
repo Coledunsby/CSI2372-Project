@@ -32,6 +32,14 @@ string Tile::getType() const {
     return "Tile";
 }
 
+void Tile::addPlayer(Player& player) {
+    players.push_back(player);
+}
+
+void Tile::removePlayer(Player& player) {
+    players.erase(remove(players.begin(), players.end(), player), players.end());
+}
+
 // Getters
 
 int Tile::getIdentifier() const {
@@ -46,8 +54,4 @@ vector<Player> Tile::getPlayers() const {
 
 void Tile::setIdentifier(const int newIdentifier) {
     identifier = newIdentifier;
-}
-
-void Tile::setPlayers(const vector<Player> newPlayers) {
-    players = newPlayers;
 }
