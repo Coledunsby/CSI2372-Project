@@ -64,13 +64,12 @@ const T* GameBoard<T, J, R, C>::getTile(int row, int col) const {
 template <class T, class J, const int R, const int C>
 T* GameBoard<T, J, R, C>::getTile(const string &playerName) {
     T* tile = nullptr;
-    const J player = players[playerName];
     for (int r = 0; r < R; r++) {
         for (int c = 0; c < C; c++) {
-            vector<J> playersOnTile = tiles[r][c]->getPlayers();
-            if (find(playersOnTile.begin(), playersOnTile.end(), player) != playersOnTile.end()) {
-                tile = tiles[r][c];
-                break;
+            for (J player : tiles[r][c]->getPlayers()) {
+                if (player == players[playerName]) {
+                    return tiles[r][c];
+                }
             }
         }
     }

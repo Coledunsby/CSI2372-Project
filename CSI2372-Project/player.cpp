@@ -27,6 +27,10 @@ void Player::setDefaults() {
     food = 10;
 }
 
+bool Player::operator==(const Player &p) {
+    return false;
+}
+
 bool Player::canAct() const {
     return food > 0;
 }

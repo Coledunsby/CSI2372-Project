@@ -29,6 +29,7 @@ class Player {
 public:
     Player();
     Player(string _name);
+    bool operator==(const Player &p);
     bool canAct() const;
     bool pay(Player& player);
     void eat();
