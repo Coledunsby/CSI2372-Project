@@ -18,15 +18,14 @@
 using namespace std;
 
 template <const int N>
-Move getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
+Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
+    Tile* newTile = nullptr;
     Move move = Move::UP;
     string moveString;
     bool moveValid = false;
     
     while (!moveValid) {
         bool inEnum = true;
-        bool outOfBounds = false;
-        int newX, newY;
         
         cout << "Where do you want to move? (up/down/left/right)" << endl;
         cin >> moveString;
@@ -47,41 +46,33 @@ Move getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
         }
         
         if (inEnum) {
-            const Tile* tile = gameBoard.getTile(pName);
-            
-            int* row;
-            int* col;
-            
-            gameBoard.getCoordinate(tile, row, col);
-            // Check out of bounds
+            newTile = gameBoard.move(move, pName);
+            if (newTile) {
+                moveValid = true;
+            }
         }
-        
-        moveValid = inEnum && !outOfBounds;
     }
     
-    return move;
+    return newTile;
 }
 
 template <const int N>
 bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     try {
         cin.exceptions(istream::failbit);
-        Move m = getMove(gameBoard, pName);
-        Tile* t = gameBoard.move(m, pName);
+        Tile* t = getMove(gameBoard, pName);
         Player p = gameBoard.getPlayer(pName);
         if (p.canAct()) {
             bool makeAction;
+            cout << t;
             cin >> makeAction;
             if (makeAction) {
-                vector<Player> opL = gameBoard.getPlayers(t);
-                if (p.getGold() >= opL.size()) {
+                if (t->action(p)) {
                     p.eat();
-                    for (auto op : opL) {
-                        p.pay(op);
-                        gameBoard.setPlayer(op);
+                    for (Player player : gameBoard.getPlayers(t)) {
+                        p.pay(player);
                     }
-                    t->action(p);
-                    gameBoard.setPlayer(p);
+                    //gameBoard.setPlayer(op);
                 }
             }
         }

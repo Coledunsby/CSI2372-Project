@@ -28,8 +28,10 @@ Tile* Tile::clone() {
     return nullptr;
 }
 
-string Tile::getType() const {
-    return "Tile";
+ostream &operator<<(ostream &output, const Tile &tile) {
+    cout << tile.getType() << ": " << tile.getAction();
+    
+    return output;
 }
 
 void Tile::addPlayer(Player& player) {

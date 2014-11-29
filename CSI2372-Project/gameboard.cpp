@@ -116,7 +116,7 @@ template <class T, class J, const int R, const int C>
 void GameBoard<T, J, R, C>::draw() const {
     for (int r = 0; r < R; r++) {
         for (int c = 0; c < C; c++) {
-            cout << "[" << tiles[r][c]->getType() << "]";
+            //cout << "[" << tiles[r][c]->getType() << "]";
         }
         cout << endl;
     }

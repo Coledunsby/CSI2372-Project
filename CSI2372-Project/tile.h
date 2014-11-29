@@ -18,8 +18,10 @@
 static int counter = 1;
 
 class Tile {
-    vector<Player> players;
     int identifier;
+    
+protected:
+    vector<Player> players;
     
 public:
     Tile();
@@ -27,7 +29,8 @@ public:
     virtual bool action(Player& player);
     virtual Tile* clone();
     virtual string getType() const = 0;
-    //ostream& operator<<;
+    virtual string getAction() const = 0;
+    friend ostream &operator<<(ostream &output, const Tile &tile);
     void addPlayer(Player& player);
     void removePlayer(Player& player);
     
@@ -44,6 +47,10 @@ public:
     string getType() const {
         return "Desert";
     }
+    
+    string getAction() const {
+        return "";
+    }
 };
 
 class Restaurant: public Tile {
@@ -56,12 +63,16 @@ public:
     string getType() const {
         return "Restaurant";
     }
+    
+    string getAction() const {
+        return "";
+    }
 };
 
 class SpiceMerchant: public Tile {
 public:
     bool action(Player& player) {
-        if (player.getGold() >= 2) {
+        if (player.getGold() >= (2 + players.size() - 1)) {
             player.setGold(player.getGold() - 2);
             player.setSpice(player.getSpice() + std::min(player.emptySpace(), 3));
             return true;
@@ -73,12 +84,16 @@ public:
     string getType() const {
         return "Spice Merchant";
     }
+    
+    string getAction() const {
+        return "";
+    }
 };
 
 class FabricManufacturer: public Tile {
 public:
     bool action(Player& player) {
-        if (player.getGold() >= 2) {
+        if (player.getGold() >= (2 + players.size() - 1)) {
             player.setGold(player.getGold() - 2);
             player.setFabric(player.getFabric() + std::min(player.emptySpace(), 3));
             return true;
@@ -90,12 +105,16 @@ public:
     string getType() const {
         return "Fabric Manufacturer";
     }
+    
+    string getAction() const {
+        return "";
+    }
 };
 
 class Jeweler: public Tile {
 public:
     bool action(Player& player) {
-        if (player.getGold() >= 2) {
+        if (player.getGold() >= (2 + players.size() - 1)) {
             player.setGold(player.getGold() - 2);
             player.setJewel(player.getJewel() + std::min(player.emptySpace(), 3));
             return true;
@@ -107,12 +126,16 @@ public:
     string getType() const {
         return "Jeweler";
     }
+    
+    string getAction() const {
+        return "";
+    }
 };
 
 class CartManufacturer: public Tile {
 public:
     bool action(Player& player) {
-        if (player.getGold() >= 7) {
+        if (player.getGold() >= (7 + players.size() - 1)) {
             player.setGold(player.getGold() - 7);
             player.setCart(player.getCart() + 3);
             return true;
@@ -123,6 +146,10 @@ public:
     
     string getType() const {
         return "Cart Manufacturer";
+    }
+    
+    string getAction() const {
+        return "";
     }
 };
 
@@ -143,6 +170,10 @@ public:
     string getType() const {
         return "Small Market";
     }
+    
+    string getAction() const {
+        return "";
+    }
 };
 
 class SpiceMarket: public Tile {
@@ -159,6 +190,10 @@ public:
     
     string getType() const {
         return "Spice Market";
+    }
+    
+    string getAction() const {
+        return "";
     }
 };
 
@@ -177,6 +212,10 @@ public:
     string getType() const {
         return "Jewelry Market";
     }
+    
+    string getAction() const {
+        return "";
+    }
 };
 
 class FabricMarket: public Tile {
@@ -194,12 +233,16 @@ public:
     string getType() const {
         return "Fabric Market";
     }
+    
+    string getAction() const {
+        return "";
+    }
 };
 
 class BlackMarket: public Tile {
 public:
     bool action(Player& player) {
-        if (player.getGold() >= 1 && player.emptySpace() > 0) {
+        if (player.getGold() >= (1 + players.size() - 1) && player.emptySpace() > 0) {
             srand(unsigned(time(0)));
             int randNum = rand() % 5;
             
@@ -234,12 +277,16 @@ public:
     string getType() const {
         return "Black Market";
     }
+    
+    string getAction() const {
+        return "";
+    }
 };
 
 class Casino: public Tile {
 public:
     bool action(Player& player) {
-        if (player.getGold() >= 1) {
+        if (player.getGold() >= (1 + players.size() - 1)) {
             srand(unsigned(time(0)));
             int randNum = rand() % 10 + 1;
             int winnings = 0;
@@ -275,6 +322,10 @@ public:
     string getType() const {
         return "Casino";
     }
+    
+    string getAction() const {
+        return "";
+    }
 };
 
 class GemMerchant: public Tile {
@@ -287,7 +338,7 @@ public:
     
     bool action(Player& player) {
         int cost = 12 + previousBuyers;
-        if (player.getGold() >= cost && player.emptySpace() > 0) {
+        if (player.getGold() >= (cost + players.size() - 1) && player.emptySpace() > 0) {
             player.setGold(player.getGold() - cost);
             player.setRuby(player.getRuby() + 1);
             previousBuyers++;
@@ -299,6 +350,10 @@ public:
     
     string getType() const {
         return "Gem Merchant";
+    }
+    
+    string getAction() const {
+        return "";
     }
 };
 
@@ -318,6 +373,10 @@ public:
     
     string getType() const {
         return "Palace";
+    }
+    
+    string getAction() const {
+        return "";
     }
 };
 
