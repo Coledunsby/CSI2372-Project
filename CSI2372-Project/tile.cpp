@@ -32,10 +32,22 @@ string Tile::getType() const {
     return "Tile";
 }
 
+// Getters
+
 int Tile::getIdentifier() const {
     return identifier;
 }
 
+vector<Player> Tile::getPlayers() const {
+    return players;
+}
+
+// Setters
+
 void Tile::setIdentifier(const int newIdentifier) {
     identifier = newIdentifier;
+}
+
+void Tile::setPlayers(const vector<Player> newPlayers) {
+    players = newPlayers;
 }

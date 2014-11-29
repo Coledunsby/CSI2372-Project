@@ -12,12 +12,9 @@
 #include <iostream>
 #include <string>
 
-class Tile;
-
 using namespace std;
 
 class Player {
-    Tile* tile;
     string name;
     int gold;
     int ruby;
@@ -39,7 +36,6 @@ public:
     friend ostream &operator<<(ostream &output, const Player &player);
     
     // Getters
-    Tile* getTile() const;
     string getName() const;
     int getGold() const;
     int getRuby() const;
@@ -50,7 +46,6 @@ public:
     int getFood() const;
     
     // Setters
-    void setTile(Tile* newTile);
     void setName(const string newName);
     void setGold(const int newGold);
     void setRuby(const int newRuby);

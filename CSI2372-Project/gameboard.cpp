@@ -53,13 +53,7 @@ void GameBoard<T, J, R, C>::getCoordinate(const T* tile, int *row, int *col) con
 
 template <class T, class J, const int R, const int C>
 vector<J> GameBoard<T, J, R, C>::getPlayers(const T* tile) const {
-    vector<J> players;
-    for (J player : players) {
-        if (player.getTile() == tile) {
-            players.push_back(player);
-        }
-    }
-    return players;
+    return tile->getPlayers();
 }
 
 template <class T, class J, const int R, const int C>
@@ -69,7 +63,18 @@ const T* GameBoard<T, J, R, C>::getTile(int row, int col) const {
 
 template <class T, class J, const int R, const int C>
 T* GameBoard<T, J, R, C>::getTile(const string &playerName) {
-    return players[playerName].getTile();
+    T* tile = nullptr;
+    const J player = players[playerName];
+    for (int r = 0; r < R; r++) {
+        for (int c = 0; c < C; c++) {
+            vector<J> playersOnTile = tiles[r][c]->getPlayers();
+            if (find(playersOnTile.begin(), playersOnTile.end(), player) != playersOnTile.end()) {
+                tile = tiles[r][c];
+                break;
+            }
+        }
+    }
+    return tile;
 }
 
 template <class T, class J, const int R, const int C>

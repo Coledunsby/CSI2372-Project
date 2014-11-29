@@ -18,6 +18,7 @@
 static int counter = 1;
 
 class Tile {
+    vector<Player> players;
     int identifier;
     
 public:
@@ -26,9 +27,15 @@ public:
     virtual bool action(Player& player);
     virtual Tile* clone();
     virtual string getType() const = 0;
-    int getIdentifier() const;
-    void setIdentifier(const int newIdentifier);
     //ostream& operator<<;
+    
+    // Getters
+    int getIdentifier() const;
+    vector<Player> getPlayers() const;
+    
+    // Setters
+    void setIdentifier(const int newIdentifier);
+    void setPlayers(const vector<Player> newPlayers);
 };
 
 class Desert: public Tile {
