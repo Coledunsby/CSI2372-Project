@@ -17,21 +17,22 @@
 
 using namespace std;
 
-GameBoard<Tile, Player, ROWS, COLS> gameBoard;
-
-Move getMove() {
+template <const int N>
+Move getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     Move move = Move::UP;
     string moveString;
     bool moveValid = false;
     
     while (!moveValid) {
+        bool inEnum = true;
+        bool outOfBounds = false;
+        int newX, newY;
+        
         cout << "Where do you want to move? (up/down/left/right)" << endl;
         cin >> moveString;
         
         // Transform input string to uppercase
         transform(moveString.begin(), moveString.end(), moveString.begin(), ::toupper);
-        
-        moveValid = true;
         
         if (moveString == "UP") {
             move = Move::UP;
@@ -42,8 +43,20 @@ Move getMove() {
         } else if (moveString == "RIGHT") {
             move = Move::RIGHT;
         } else {
-            moveValid = false;
+            inEnum = false;
         }
+        
+        if (inEnum) {
+            const Tile* tile = gameBoard.getTile(pName);
+            
+            int* row;
+            int* col;
+            
+            gameBoard.getCoordinate(tile, row, col);
+            // Check out of bounds
+        }
+        
+        moveValid = inEnum && !outOfBounds;
     }
     
     return move;
@@ -53,8 +66,8 @@ template <const int N>
 bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     try {
         cin.exceptions(istream::failbit);
-        Move m = getMove();
-        Tile t = gameBoard.move(m, pName);
+        Move m = getMove(gameBoard, pName);
+        Tile* t = gameBoard.move(m, pName);
         Player p = gameBoard.getPlayer(pName);
         if (p.canAct()) {
             bool makeAction;
@@ -67,7 +80,7 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
                         p.pay(op);
                         gameBoard.setPlayer(op);
                     }
-                    t.action(p);
+                    t->action(p);
                     gameBoard.setPlayer(p);
                 }
             }
@@ -82,125 +95,55 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     return false;
 }
 
-bool moveIsValid(Player& player, Move move) {
-    return true;
-}
-
-void setupGame() {
-    
-    // Get number of players
-    int numPlayers;
-    do {
-        cout << "How many players? (" << MIN_PLAYERS << "-" << MAX_PLAYERS << ")" << endl;
-        cin >> numPlayers;
-    } while (!(numPlayers >= MIN_PLAYERS && numPlayers <= MAX_PLAYERS));
-    
-    // Add tiles
-    TileFactory *tf = TileFactory::get(ROWS * COLS);
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLS; j++) {
-            gameBoard.addTile(tf->next(), i, j);
-        }
-    }
-    
-    // Get player names
-    for (int i = 0; i < numPlayers; i++) {
-        cout << "Player " << i + 1 << " Name:" << endl;
-        string playerName;
-        cin >> playerName;
-        Player player(playerName);
-        gameBoard.addPlayer(player, playerName);
-    }
-}
-
 int main(int argc, const char * argv[]) {
 
     bool paused = false;
-    bool hasWon = false;
+    
+    vector<Player> players;
+    vector<string> pNames;
+    GameBoard<Tile, Player, ROWS, COLS> *gb = nullptr;
     
     if (paused) {
         paused = false;
     } else {
-        setupGame();
-    }
-    
-    while (!hasWon) {
-        
-        // Check for pause
-        
-        for (auto pName : gameBoard.getpla) {
-            
-            cout << player;
-            
-            // Move logic
-            
-            if (player.canAct()) {
-                // Display tile action
-                
-            }
-            
-            cout << player;
-            
-            if (player.getRuby() >= 5) {
-                hasWon = true;
-            }
-        }
-    }
-    
-    
-    /*
-    for (int i = 0; i < players.size(); i++) {
+        // Get number of players
+        int numPlayers;
         do {
-            cout << players[i].getName();
-        } while (!takeTurn(gameBoard, players[i].getName()));
+            cout << "How many players? (" << MIN_PLAYERS << "-" << MAX_PLAYERS << ")" << endl;
+            cin >> numPlayers;
+        } while (!(numPlayers >= MIN_PLAYERS && numPlayers <= MAX_PLAYERS));
         
-        //if (bg.win(players[i]) break;
-    }*/
-    
-    //Translated Pseudo Code
-    /*
-    bool isPaused = false;
-    int choseAction = 0;
-
-    if (isPaused) {
-        isPaused = false;
-    } else {
-        cin >> numberOfPlayers; //??
-        for (int i = 0; i < numberOfPlayers; i++) {
-            cin >> player[i].setName();
+        // Get player names
+        for (int i = 0; i < numPlayers; i++) {
+            cout << "Player " << i + 1 << " Name:" << endl;
+            string playerName;
+            cin >> playerName;
+            Player player(playerName);
+            pNames.push_back(playerName);
+            players.push_back(player);
         }
-        bool hasWon = false;
-             
-        while (!hasWon) {
-            if (isPaused) {
-                   isPaused = false;
-            }
-            for (int i = 1; i < numberOfPlayers; i++){
-                cout << "Player " << i << "You have " <<player[i].getGold() << " gold, " << player[i].getRuby() << " rubys, " << player[i].getSpice() << " spice, " << player[i].getFabric() << " fabric, " << player[i].getFabric() << " jewels, " << player[i].getCart() << " cart capactiy and " <<player[i].getFood() << " food." << endl;
-                while (!moveIsValid(player[i])) {
-                   cin << m
-                }
-                gameboard.move(Move, player[i]);
-                if (player[i].canAct()) {
-                    gameboard.getTile(player[i]);
-                    cout<< "Type 1 for yes or 2 for no" << endl;
-                    cin << choseAction;
-                    if (choseAction == 1 && tile.action(player[i])) {
-                        if(tile is occupied) {
-                            player[i].pay(gameboard.getPlayer());
-                        }
-                    }
-                                          
-                    cout << "Player " << i << "You have " <<player[i].getGold() << " gold, " <<player[i].getRuby() << " rubys, " <<player[i].getSpice() << " spice, " <<player[i].getFabric() << " fabric, " <<player[i].getFabric() << " jewels, " <<player[i].getCart() << " cart capactiy and " <<player[i].getFood() << " food." << endl;
-                    
-                    if (player[i].getRuby() == 5) {
-                               hasWon = true;
-                    }
-                }
+        
+        // Create gameboard with players
+        GameBoard<Tile, Player, ROWS, COLS> gameBoard(players);
+        gb = &gameBoard;
+        
+        // Add tiles
+        TileFactory *tf = TileFactory::get(ROWS * COLS);
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                gameBoard.addTile(tf->next(), i, j);
             }
         }
+        
+        gameBoard.draw(); // FOR DEBUG
     }
-     */
+    
+    for (auto pName : pNames) {
+        do {
+            cout << gb->getPlayer(pName);
+        } while (!takeTurn(*gb, pName));
+        if (gb->win(pName)) break;
+    }
    
     return 0;
 }

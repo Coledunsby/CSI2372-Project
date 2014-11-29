@@ -15,21 +15,25 @@
 #include <vector>
 #include "player.h"
 
+static int counter = 1;
+
 class Tile {
-    
+    int identifier;
     
 public:
     Tile();
     bool operator==(const Tile &t);
     virtual bool action(Player& player);
     virtual Tile* clone();
-    virtual string getType();
+    virtual string getType() const = 0;
+    int getIdentifier() const;
+    void setIdentifier(const int newIdentifier);
     //ostream& operator<<;
 };
 
 class Desert: public Tile {
 public:
-    string getType() {
+    string getType() const {
         return "Desert";
     }
 };
@@ -41,7 +45,7 @@ public:
         return true;
     }
     
-    string getType() {
+    string getType() const {
         return "Restaurant";
     }
 };
@@ -58,7 +62,7 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Spice Merchant";
     }
 };
@@ -75,7 +79,7 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Fabric Manufacturer";
     }
 };
@@ -92,7 +96,7 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Jeweler";
     }
 };
@@ -109,7 +113,7 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Cart Manufacturer";
     }
 };
@@ -128,7 +132,7 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Small Market";
     }
 };
@@ -145,7 +149,7 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Spice Market";
     }
 };
@@ -162,7 +166,7 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Jewelry Market";
     }
 };
@@ -179,7 +183,7 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Fabric Market";
     }
 };
@@ -219,7 +223,7 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Black Market";
     }
 };
@@ -260,7 +264,7 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Casino";
     }
 };
@@ -285,7 +289,7 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Gem Merchant";
     }
 };
@@ -304,13 +308,13 @@ public:
         }
     }
     
-    string getType() {
+    string getType() const {
         return "Palace";
     }
 };
 
 class TileFactory {
-    std::vector<Tile> tiles;
+    vector<Tile*> tiles;
     int nTiles;
     int nType;
     int index;
@@ -336,24 +340,24 @@ public:
             GemMerchant gemMerchantTile;
             Palace palaceTile;
             
-            tiles.push_back(restaurantTile);
-            tiles.push_back(spiceMerchantTile);
-            tiles.push_back(fabricManufacturerTile);
-            tiles.push_back(jewelerTile);
-            tiles.push_back(cartManufacturerTile);
-            tiles.push_back(smallMarketTile);
-            tiles.push_back(spiceMarketTile);
-            tiles.push_back(jewelryMarketTile);
-            tiles.push_back(fabricMarketTile);
-            tiles.push_back(blackMarketTile);
-            tiles.push_back(casinoTile);
-            tiles.push_back(gemMerchantTile);
-            tiles.push_back(palaceTile);
+            tiles.push_back(&restaurantTile);
+            tiles.push_back(&spiceMerchantTile);
+            tiles.push_back(&fabricManufacturerTile);
+            tiles.push_back(&jewelerTile);
+            tiles.push_back(&cartManufacturerTile);
+            tiles.push_back(&smallMarketTile);
+            tiles.push_back(&spiceMarketTile);
+            tiles.push_back(&jewelryMarketTile);
+            tiles.push_back(&fabricMarketTile);
+            tiles.push_back(&blackMarketTile);
+            tiles.push_back(&casinoTile);
+            tiles.push_back(&gemMerchantTile);
+            tiles.push_back(&palaceTile);
         }
         
         while (tiles.size() < nTiles) {
             Desert desertTile;
-            tiles.push_back(desertTile);
+            tiles.push_back(&desertTile);
         }
         
         srand(unsigned(time(0)));
@@ -365,7 +369,7 @@ public:
         return &tf;
     }
     
-    Tile& next() {
+    Tile* next() {
         index++;
         return tiles[index];
     }

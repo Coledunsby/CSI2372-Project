@@ -13,7 +13,7 @@
  ----------------------------------------------------------------- */
 
 Tile::Tile() {
-    
+    identifier = counter++;
 }
 
 bool Tile::operator==(const Tile &t) {
@@ -28,6 +28,14 @@ Tile* Tile::clone() {
     return nullptr;
 }
 
-string Tile::getType() {
+string Tile::getType() const {
     return "Tile";
+}
+
+int Tile::getIdentifier() const {
+    return identifier;
+}
+
+void Tile::setIdentifier(const int newIdentifier) {
+    identifier = newIdentifier;
 }

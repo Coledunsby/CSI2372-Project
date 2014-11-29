@@ -21,19 +21,21 @@ enum class Move { UP, DOWN, LEFT, RIGHT };
 template <class T, class J, const int R, const int C>
 class GameBoard {
     map<string, J> players;
-    T tiles[R][C];
+    T* tiles[R][C];
     
 public:
     GameBoard();
-    void addPlayer(J player, string name);
+    GameBoard(vector<J> _players);
+    void addPlayer(J& player);
     void setPlayer(J player);
     J getPlayer(const string& playerName);
-    void addTile(const T& tile, int row, int col);
-    void getCoordinate(const T &tile, int *row, int *col) const;
-    vector<J> getPlayers(const T& tile) const;
-    const T& getTile(int row, int col) const;
-    const T& getTile(const string& playerName) const;
-    const T& move(enum Move move, const string& playerName);
+    void addTile(T* tile, int row, int col);
+    void getCoordinate(const T* tile, int *row, int *col) const;
+    vector<J> getPlayers(const T* tile) const;
+    const T* getTile(int row, int col) const;
+    T* getTile(const string& playerName);
+    T* move(enum Move move, const string& playerName);
+    bool win(const string& playerName);
     void draw() const;
 };
 

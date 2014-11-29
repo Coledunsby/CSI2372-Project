@@ -8,8 +8,16 @@
 
 #include "player.h"
 
+Player::Player() {
+    setDefaults();
+}
+
 Player::Player(string _name) {
     name = _name;
+    setDefaults();
+}
+
+void Player::setDefaults() {
     gold = 5;
     ruby = 0;
     spice = 1;
@@ -58,6 +66,10 @@ ostream &operator<<(ostream &output, const Player &player) {
 
 // Getters
 
+Tile* Player::getTile() const {
+    return tile;
+}
+
 string Player::getName() const {
     return name;
 }
@@ -91,6 +103,10 @@ int Player::getFood() const {
 }
 
 // Setters
+
+void Player::setTile(Tile* newTile) {
+    tile = newTile;
+}
 
 void Player::setName(const string newName) {
     name = newName;
