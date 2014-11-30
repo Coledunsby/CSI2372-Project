@@ -26,7 +26,6 @@ class GameBoard {
 public:
     GameBoard();
     GameBoard(vector<J> _players);
-    void addPlayer(J& player);
     void setPlayer(J player);
     J getPlayer(const string& playerName);
     void addTile(T* tile, int row, int col);

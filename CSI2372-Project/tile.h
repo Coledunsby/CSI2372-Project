@@ -15,46 +15,56 @@
 #include <vector>
 #include "player.h"
 
-static int counter = 1;
-
 class Tile {
-    int identifier;
+    static int counter;
+    const int identifier;
     
 protected:
     vector<Player> players;
     
 public:
     Tile();
-    bool operator==(const Tile &t);
-    virtual bool action(Player& player);
+    bool operator==(const Tile &tile);
+    virtual bool action(Player& player) = 0;
     virtual Tile* clone();
     virtual string getType() const = 0;
     virtual string getAction() const = 0;
-    friend ostream &operator<<(ostream &output, const Tile &tile);
+    friend ostream &operator<<(ostream &output, const Tile *tile);
     void addPlayer(Player& player);
+    void addPlayers(vector<Player> newPlayers);
     void removePlayer(Player& player);
+    bool isOnTile(Player& player);
     
     // Getters
     int getIdentifier() const;
     vector<Player> getPlayers() const;
-    
-    // Setters
-    void setIdentifier(const int newIdentifier);
 };
 
 class Desert: public Tile {
 public:
+    Desert() {
+        
+    }
+    
+    bool action(Player& player) {
+        return false;
+    }
+    
     string getType() const {
         return "Desert";
     }
     
     string getAction() const {
-        return "";
+        return "No action possible on this tile.";
     }
 };
 
 class Restaurant: public Tile {
 public:
+    Restaurant() {
+        
+    }
+    
     bool action(Player& player) {
         player.setFood(10);
         return true;
@@ -65,12 +75,16 @@ public:
     }
     
     string getAction() const {
-        return "";
+        return "Your food has been replenished!";
     }
 };
 
 class SpiceMerchant: public Tile {
 public:
+    SpiceMerchant() {
+        
+    }
+    
     bool action(Player& player) {
         if (player.getGold() >= (2 + players.size() - 1)) {
             player.setGold(player.getGold() - 2);
@@ -86,12 +100,16 @@ public:
     }
     
     string getAction() const {
-        return "";
+        return "Trade 2 pieces of gold for 3 sacks of spices?";
     }
 };
 
 class FabricManufacturer: public Tile {
 public:
+    FabricManufacturer() {
+        
+    }
+    
     bool action(Player& player) {
         if (player.getGold() >= (2 + players.size() - 1)) {
             player.setGold(player.getGold() - 2);
@@ -107,12 +125,16 @@ public:
     }
     
     string getAction() const {
-        return "";
+        return "Trade 2 pieces of gold for 3 rolls of fabrics?";
     }
 };
 
 class Jeweler: public Tile {
 public:
+    Jeweler() {
+        
+    }
+    
     bool action(Player& player) {
         if (player.getGold() >= (2 + players.size() - 1)) {
             player.setGold(player.getGold() - 2);
@@ -128,12 +150,16 @@ public:
     }
     
     string getAction() const {
-        return "";
+        return "Trade 2 pieces of gold for 3 pieces of jewelry?";
     }
 };
 
 class CartManufacturer: public Tile {
 public:
+    CartManufacturer() {
+        
+    }
+    
     bool action(Player& player) {
         if (player.getGold() >= (7 + players.size() - 1)) {
             player.setGold(player.getGold() - 7);
@@ -149,12 +175,16 @@ public:
     }
     
     string getAction() const {
-        return "";
+        return "Increase your cart capacity by 3 for 7 gold?";
     }
 };
 
 class SmallMarket: public Tile {
 public:
+    SmallMarket() {
+        
+    }
+    
     bool action(Player& player) {
         if (player.getFabric() >= 1 && player.getJewel() >= 1 && player.getSpice() >= 1) {
             player.setFabric(player.getFabric() - 1);
@@ -172,12 +202,16 @@ public:
     }
     
     string getAction() const {
-        return "";
+        return "Trade 1 roll of fabric, 1 jewel and 1 sack of spices for 8 gold?";
     }
 };
 
 class SpiceMarket: public Tile {
 public:
+    SpiceMarket() {
+        
+    }
+    
     bool action(Player& player) {
         if (player.getSpice() >= 3) {
             player.setSpice(player.getSpice() - 3);
@@ -193,12 +227,16 @@ public:
     }
     
     string getAction() const {
-        return "";
+        return "Sell 3 sacks of spices for 6 gold?";
     }
 };
 
 class JewelryMarket: public Tile {
 public:
+    JewelryMarket() {
+        
+    }
+    
     bool action(Player& player) {
         if (player.getJewel() >= 3) {
             player.setJewel(player.getJewel() - 3);
@@ -214,12 +252,16 @@ public:
     }
     
     string getAction() const {
-        return "";
+        return "Sell 3 pieces of jewelry for 6 gold?";
     }
 };
 
 class FabricMarket: public Tile {
 public:
+    FabricMarket() {
+        
+    }
+    
     bool action(Player& player) {
         if (player.getFabric() >= 3) {
             player.setFabric(player.getFabric() - 3);
@@ -235,12 +277,16 @@ public:
     }
     
     string getAction() const {
-        return "";
+        return "Sell 3 rolls of fabric for 6 gold?";
     }
 };
 
 class BlackMarket: public Tile {
 public:
+    BlackMarket() {
+        
+    }
+    
     bool action(Player& player) {
         if (player.getGold() >= (1 + players.size() - 1) && player.emptySpace() > 0) {
             srand(unsigned(time(0)));
@@ -279,12 +325,16 @@ public:
     }
     
     string getAction() const {
-        return "";
+        return "Get between 0 and 5 goods at random for 1 gold?";
     }
 };
 
 class Casino: public Tile {
 public:
+    Casino() {
+        
+    }
+    
     bool action(Player& player) {
         if (player.getGold() >= (1 + players.size() - 1)) {
             srand(unsigned(time(0)));
@@ -324,7 +374,7 @@ public:
     }
     
     string getAction() const {
-        return "";
+        return "Gamble for 1 gold (could win 0 (40%), 2 (30%), 3 (20%), or 10 (10%) gold)?";
     }
 };
 
@@ -353,12 +403,17 @@ public:
     }
     
     string getAction() const {
-        return "";
+        int cost = 12 + previousBuyers;
+        return "Buy a ruby for " + to_string(cost) + " gold?";
     }
 };
 
 class Palace: public Tile {
 public:
+    Palace() {
+        
+    }
+    
     bool action(Player& player) {
         if (player.getFabric() >= 5 && player.getJewel() >= 5 && player.getSpice() >= 5) {
             player.setFabric(player.getFabric() - 5);
@@ -376,69 +431,7 @@ public:
     }
     
     string getAction() const {
-        return "";
-    }
-};
-
-class TileFactory {
-    vector<Tile*> tiles;
-    int nTiles;
-    int nType;
-    int index;
-    
-public:
-    TileFactory(int _nTiles) {
-        nTiles = _nTiles;
-        nType = floor(nTiles / 14);
-        index = -1;
-        
-        for (int i = 0; i < nType; i++) {
-            Restaurant restaurantTile;
-            SpiceMerchant spiceMerchantTile;
-            FabricManufacturer fabricManufacturerTile;
-            Jeweler jewelerTile;
-            CartManufacturer cartManufacturerTile;
-            SmallMarket smallMarketTile;
-            SpiceMarket spiceMarketTile;
-            JewelryMarket jewelryMarketTile;
-            FabricMarket fabricMarketTile;
-            BlackMarket blackMarketTile;
-            Casino casinoTile;
-            GemMerchant gemMerchantTile;
-            Palace palaceTile;
-            
-            tiles.push_back(&restaurantTile);
-            tiles.push_back(&spiceMerchantTile);
-            tiles.push_back(&fabricManufacturerTile);
-            tiles.push_back(&jewelerTile);
-            tiles.push_back(&cartManufacturerTile);
-            tiles.push_back(&smallMarketTile);
-            tiles.push_back(&spiceMarketTile);
-            tiles.push_back(&jewelryMarketTile);
-            tiles.push_back(&fabricMarketTile);
-            tiles.push_back(&blackMarketTile);
-            tiles.push_back(&casinoTile);
-            tiles.push_back(&gemMerchantTile);
-            tiles.push_back(&palaceTile);
-        }
-        
-        while (tiles.size() < nTiles) {
-            Desert desertTile;
-            tiles.push_back(&desertTile);
-        }
-        
-        srand(unsigned(time(0)));
-        random_shuffle(tiles.begin(), tiles.end());
-    }
-    
-    static TileFactory *get(int _nTiles) {
-        static TileFactory tf(_nTiles);
-        return &tf;
-    }
-    
-    Tile* next() {
-        index++;
-        return tiles[index];
+        return "Trade 5 rolls of fabric, 5 pieces of jewelry and 5 sacks of spices for 1 ruby?";
     }
 };
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		ED52A5E81A115CD40050C48F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED52A5E71A115CD40050C48F /* main.cpp */; };
+		EDAB801B1A2BDB46007E47FA /* tilefactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAB80191A2BDB46007E47FA /* tilefactory.cpp */; };
 		EDD5A37D1A23C8C000BBD9CE /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDD5A37B1A23C8C000BBD9CE /* player.cpp */; };
 		EDF83F061A2517FC0075BD36 /* tile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDF83F051A2517FC0075BD36 /* tile.cpp */; };
 /* End PBXBuildFile section */
@@ -27,6 +28,8 @@
 /* Begin PBXFileReference section */
 		ED52A5E41A115CD40050C48F /* CSI2372-Project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CSI2372-Project"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED52A5E71A115CD40050C48F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		EDAB80191A2BDB46007E47FA /* tilefactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tilefactory.cpp; sourceTree = "<group>"; };
+		EDAB801A1A2BDB46007E47FA /* tilefactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tilefactory.h; sourceTree = "<group>"; };
 		EDD5A37B1A23C8C000BBD9CE /* player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = player.cpp; sourceTree = "<group>"; };
 		EDD5A37C1A23C8C000BBD9CE /* player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = player.h; sourceTree = "<group>"; };
 		EDD5A37F1A23C8C700BBD9CE /* gameboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gameboard.h; sourceTree = "<group>"; };
@@ -72,6 +75,8 @@
 				EDD5A37B1A23C8C000BBD9CE /* player.cpp */,
 				EDD5A3821A23C8DA00BBD9CE /* tile.h */,
 				EDF83F051A2517FC0075BD36 /* tile.cpp */,
+				EDAB801A1A2BDB46007E47FA /* tilefactory.h */,
+				EDAB80191A2BDB46007E47FA /* tilefactory.cpp */,
 			);
 			path = "CSI2372-Project";
 			sourceTree = "<group>";
@@ -134,6 +139,7 @@
 			files = (
 				EDD5A37D1A23C8C000BBD9CE /* player.cpp in Sources */,
 				ED52A5E81A115CD40050C48F /* main.cpp in Sources */,
+				EDAB801B1A2BDB46007E47FA /* tilefactory.cpp in Sources */,
 				EDF83F061A2517FC0075BD36 /* tile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

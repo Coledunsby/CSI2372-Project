@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "gameboard.h"
+#include "tilefactory.h"
 #include "tile.h"
 
 #define MIN_PLAYERS 2
@@ -89,6 +90,7 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
 int main(int argc, const char * argv[]) {
 
     bool paused = false;
+    bool placedPlayers = false;
     
     vector<Player> players;
     vector<string> pNames;
@@ -106,12 +108,20 @@ int main(int argc, const char * argv[]) {
         
         // Get player names
         for (int i = 0; i < numPlayers; i++) {
-            cout << "Player " << i + 1 << " Name:" << endl;
-            string playerName;
-            cin >> playerName;
-            Player player(playerName);
-            pNames.push_back(playerName);
-            players.push_back(player);
+            bool nameValid = false;
+            while (!nameValid) {
+                cout << "Player " << i + 1 << " Name:" << endl;
+                string playerName;
+                cin >> playerName;
+                if (find(pNames.begin(), pNames.end(), playerName) != pNames.end()) {
+                    cout << "Name taken!" << endl;
+                } else {
+                    Player player(playerName);
+                    pNames.push_back(playerName);
+                    players.push_back(player);
+                    nameValid = true;
+                }
+            }
         }
         
         // Create gameboard with players
@@ -122,7 +132,12 @@ int main(int argc, const char * argv[]) {
         TileFactory *tf = TileFactory::get(ROWS * COLS);
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                gameBoard.addTile(tf->next(), i, j);
+                Tile* t = tf->next();
+                //if (t->getType() == "Restaurant" && !placedPlayers) {
+                    //t->addPlayers(players);
+                    gameBoard.addTile(t, i, j);
+                    //placedPlayers = true;
+                //}
             }
         }
         

@@ -19,11 +19,6 @@ GameBoard<T, J, R, C>::GameBoard(vector<J> _players) {
 }
 
 template <class T, class J, const int R, const int C>
-void GameBoard<T, J, R, C>::addPlayer(J &player) {
-    players[player.getName()] = player;
-}
-
-template <class T, class J, const int R, const int C>
 void GameBoard<T, J, R, C>::setPlayer(J player) {
     
 }
@@ -66,10 +61,9 @@ T* GameBoard<T, J, R, C>::getTile(const string &playerName) {
     T* tile = nullptr;
     for (int r = 0; r < R; r++) {
         for (int c = 0; c < C; c++) {
-            for (J player : tiles[r][c]->getPlayers()) {
-                if (player == players[playerName]) {
-                    return tiles[r][c];
-                }
+            J player = getPlayer(playerName);
+            if (tiles[r][c]->isOnTile(player)) {
+                tile = tiles[r][c];
             }
         }
     }
@@ -116,7 +110,7 @@ template <class T, class J, const int R, const int C>
 void GameBoard<T, J, R, C>::draw() const {
     for (int r = 0; r < R; r++) {
         for (int c = 0; c < C; c++) {
-            //cout << "[" << tiles[r][c]->getType() << "]";
+            cout << "[" << tiles[r][c]->getType() << "]";
         }
         cout << endl;
     }
