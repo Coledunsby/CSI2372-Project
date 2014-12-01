@@ -40,6 +40,9 @@ public:
     friend ostream& operator<<(ostream &os, GameBoard& GameBoard){
            os << GameBoard;
            return os;
+    friend istream& operator>>(istream& istream, GameBoard& GameBoard){
+           is >> GameBoard;
+           return is;
 };
 
 #include "gameboard.cpp"

@@ -18,6 +18,7 @@
 #define COLS 6
 
 using namespace std;
+ifstream file("gameboard.txt");
 
 template <const int N>
 Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
@@ -165,7 +166,12 @@ int main(int argc, const char * argv[]) {
             cout << "Is there a game currently saved that you would like to play? (y or n)";
             cin >> answer;
             if (answer == "y"){
-                istream& operator>>(istream&, BoardGame&);       
+                       ifstream file("gmeboard.txt");
+                       file >> gb;
+                       file.close();
+                       for (auto pName : pNames){
+                           pNames.push_back(player.name);
+                       }      
             }
             else 
             cout << "How many players? (" << MIN_PLAYERS << "-" << MAX_PLAYERS << ")" << endl;
