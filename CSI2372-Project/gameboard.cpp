@@ -103,13 +103,13 @@ T* GameBoard<T, J, R, C>::move(enum Move move, const string& playerName) {
     
     getCoordinate(currentTile, currentRow, currentCol);
     
-    if (move == Move::UP) {
+    if (move == UP) {
         rowOffset = -1;
-    } else if (move == Move::DOWN) {
+    } else if (move == DOWN) {
         rowOffset = 1;
-    } else if (move == Move::LEFT) {
+    } else if (move == LEFT) {
         colOffset = -1;
-    } else if (move == Move::RIGHT) {
+    } else if (move == RIGHT) {
         colOffset = 1;
     }
     

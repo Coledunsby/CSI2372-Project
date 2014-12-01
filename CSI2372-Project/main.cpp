@@ -56,7 +56,7 @@ bool getBoolean(string question) {
 template <const int N>
 Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     Tile* newTile = nullptr;
-    Move move = Move::UP;
+    Move move = UP;
     string moveString;
     bool moveValid = false;
     
@@ -71,13 +71,13 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
         
         // Check if value is valid (in enumeration Move)
         if (moveString == "UP") {
-            move = Move::UP;
+            move = UP;
         } else if (moveString == "DOWN") {
-            move = Move::DOWN;
+            move = DOWN;
         } else if (moveString == "LEFT") {
-            move = Move::LEFT;
+            move = LEFT;
         } else if (moveString == "RIGHT") {
-            move = Move::RIGHT;
+            move = RIGHT;
         } else {
             cout << "Invalid input!" << endl;
             cin.clear();

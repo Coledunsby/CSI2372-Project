@@ -17,7 +17,7 @@
 
 using namespace std;
 
-enum class Move {
+enum Move {
     UP,
     DOWN,
     LEFT,
