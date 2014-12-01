@@ -121,7 +121,7 @@ public:
                     tile = new Casino();
                 } else if (type == "GemMerchant") {
                     tile = new GemMerchant();
-                } else if (type == "Palace") {
+                } else {
                     tile = new Palace();
                 }
                 
