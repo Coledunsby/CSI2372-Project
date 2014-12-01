@@ -50,6 +50,8 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
             newTile = gameBoard.move(move, pName);
             if (newTile) {
                 moveValid = true;
+            } else {
+                cout << "You can't move there! You are at the edge of the board." << endl;
             }
         }
     }
@@ -63,23 +65,30 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
         cin.exceptions(istream::failbit);
         Tile* t = getMove(gameBoard, pName);
         Player p = gameBoard.getPlayer(pName);
+        cout << t;
         if (p.canAct()) {
-            bool makeAction;
-            cout << t;
-            cin >> makeAction;
-            if (makeAction) {
-                if (t->action(p)) {
-                    p.eat();
-                    for (Player player : gameBoard.getPlayers(t)) {
-                        p.pay(player);
+            if (t->hasAction()) {
+                cout << "Do you want to perform this action? (yes/no)" << endl;
+                bool makeAction;
+                cin >> makeAction;
+                if (makeAction) {
+                    if (t->action(p)) {
+                        p.eat();
+                        for (Player player : gameBoard.getPlayers(t)) {
+                            p.pay(player);
+                        }
+                        //gameBoard.setPlayer(op);
                     }
-                    //gameBoard.setPlayer(op);
                 }
+            } else {
+                cout << "No action available on this tile." << endl;
             }
+        } else {
+            cout << "You are unable to perform this action." << endl;
         }
         return true;
     } catch (istream::failure e) {
-        cout << "Incorrect key pressed";
+        cout << "Incorrect key pressed!" << endl;;
         cin.clear();
     } catch (out_of_range e) {
         cout << e.what();
@@ -91,6 +100,7 @@ int main(int argc, const char * argv[]) {
 
     bool paused = false;
     bool placedPlayers = false;
+    bool winner = false;
     
     vector<Player> players;
     vector<string> pNames;
@@ -104,6 +114,11 @@ int main(int argc, const char * argv[]) {
         do {
             cout << "How many players? (" << MIN_PLAYERS << "-" << MAX_PLAYERS << ")" << endl;
             cin >> numPlayers;
+            if (numPlayers < MIN_PLAYERS || numPlayers > MAX_PLAYERS) {
+                cout << "Invalid input!" << endl;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
         } while (!(numPlayers >= MIN_PLAYERS && numPlayers <= MAX_PLAYERS));
         
         // Get player names
@@ -151,14 +166,21 @@ int main(int argc, const char * argv[]) {
         
         gameBoard.getCoordinate(t, row, col);
 
-        cout << "players starting at " << t->getType() << "(" << t->getIdentifier() << "): (" << *row << "," << *col << ")";
+        cout << "players starting at " << t->getType() << "(" << t->getIdentifier() << "): (" << *row << "," << *col << ")" << endl;
     }
     
-    for (auto pName : pNames) {
-        do {
-            cout << gb->getPlayer(pName);
-        } while (!takeTurn(*gb, pName));
-        if (gb->win(pName)) break;
+    while (!winner) {
+        for (auto pName : pNames) {
+            do {
+                Player player = gb->getPlayer(pName);
+                cout << player << endl;
+            } while (!takeTurn(*gb, pName));
+            
+            if (gb->win(pName)) {
+                winner = true;
+                break;
+            }
+        }
     }
    
     return 0;

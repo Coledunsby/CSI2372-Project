@@ -29,7 +29,7 @@ Tile* Tile::clone() {
 }
 
 ostream &operator<<(ostream &output, const Tile *tile) {
-    cout << "id: " << tile->getIdentifier() << endl;//tile->getType() << endl;// << ": " << tile->getAction();
+    cout << tile->getType() << ": " << tile->getAction() << endl;
     
     return output;
 }
@@ -88,6 +88,10 @@ string Desert::getAction() const {
     return "No action possible on this tile.";
 }
 
+bool Desert::hasAction() const {
+    return false;
+}
+
 
 /* ===============================================================
  Restaurant
@@ -110,6 +114,10 @@ string Restaurant::getType() const {
 
 string Restaurant::getAction() const {
     return "Your food has been replenished!";
+}
+
+bool Restaurant::hasAction() const {
+    return false;
 }
 
 
@@ -141,6 +149,10 @@ string SpiceMerchant::getAction() const {
     return "Trade 2 pieces of gold for 3 sacks of spices?";
 }
 
+bool SpiceMerchant::hasAction() const {
+    return true;
+}
+
 
 /* ===============================================================
  FabricManufacturer
@@ -168,6 +180,10 @@ string FabricManufacturer::getType() const {
 
 string FabricManufacturer::getAction() const {
     return "Trade 2 pieces of gold for 3 rolls of fabrics?";
+}
+
+bool FabricManufacturer::hasAction() const {
+    return true;
 }
 
 
@@ -199,6 +215,10 @@ string Jeweler::getAction() const {
     return "Trade 2 pieces of gold for 3 pieces of jewelry?";
 }
 
+bool Jeweler::hasAction() const {
+    return true;
+}
+
 
 /* ===============================================================
  CartManufacturer
@@ -226,6 +246,10 @@ string CartManufacturer::getType() const {
 
 string CartManufacturer::getAction() const {
     return "Increase your cart capacity by 3 for 7 gold?";
+}
+
+bool CartManufacturer::hasAction() const {
+    return true;
 }
 
 
@@ -259,6 +283,10 @@ string SmallMarket::getAction() const {
     return "Trade 1 roll of fabric, 1 jewel and 1 sack of spices for 8 gold?";
 }
 
+bool SmallMarket::hasAction() const {
+    return true;
+}
+
 
 /* ===============================================================
  SpiceMarket
@@ -286,6 +314,10 @@ string SpiceMarket::getType() const {
 
 string SpiceMarket::getAction() const {
     return "Sell 3 sacks of spices for 6 gold?";
+}
+
+bool SpiceMarket::hasAction() const {
+    return true;
 }
 
 
@@ -317,6 +349,10 @@ string JewelryMarket::getAction() const {
     return "Sell 3 pieces of jewelry for 6 gold?";
 }
 
+bool JewelryMarket::hasAction() const {
+    return true;
+}
+
 
 /* ===============================================================
  FabricMarket
@@ -344,6 +380,10 @@ string FabricMarket::getType() const {
 
 string FabricMarket::getAction() const {
     return "Sell 3 rolls of fabric for 6 gold?";
+}
+
+bool FabricMarket::hasAction() const {
+    return true;
 }
 
 
@@ -396,6 +436,10 @@ string BlackMarket::getType() const {
 
 string BlackMarket::getAction() const {
     return "Get between 0 and 5 goods at random for 1 gold?";
+}
+
+bool BlackMarket::hasAction() const {
+    return true;
 }
 
 
@@ -451,6 +495,10 @@ string Casino::getAction() const {
     return "Gamble for 1 gold (could win 0 (40%), 2 (30%), 3 (20%), or 10 (10%) gold)?";
 }
 
+bool Casino::hasAction() const {
+    return true;
+}
+
 
 /* ===============================================================
  GemMerchant
@@ -483,6 +531,10 @@ string GemMerchant::getAction() const {
     return "Buy a ruby for " + to_string(cost) + " gold?";
 }
 
+bool GemMerchant::hasAction() const {
+    return true;
+}
+
 
 /* ===============================================================
  Palace
@@ -512,4 +564,8 @@ string Palace::getType() const {
 
 string Palace::getAction() const {
     return "Trade 5 rolls of fabric, 5 pieces of jewelry and 5 sacks of spices for 1 ruby?";
+}
+
+bool Palace::hasAction() const {
+    return true;
 }

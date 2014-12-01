@@ -31,7 +31,7 @@ public:
     void addTile(T* tile, int row, int col);
     void getCoordinate(const T* tile, int *row, int *col) const;
     vector<J> getPlayers(const T* tile) const;
-    const T* getTile(int row, int col) const;
+    T* getTile(int row, int col) const;
     T* getTile(const string& playerName);
     T* move(enum Move move, const string& playerName);
     bool win(const string& playerName);

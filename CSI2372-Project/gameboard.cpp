@@ -58,7 +58,7 @@ vector<J> GameBoard<T, J, R, C>::getPlayers(const T* tile) const {
 }
 
 template <class T, class J, const int R, const int C>
-const T* GameBoard<T, J, R, C>::getTile(int row, int col) const {
+T* GameBoard<T, J, R, C>::getTile(int row, int col) const {
     return tiles[row][col];
 }
 
@@ -79,31 +79,32 @@ T* GameBoard<T, J, R, C>::getTile(const string &playerName) {
 
 template <class T, class J, const int R, const int C>
 T* GameBoard<T, J, R, C>::move(enum Move move, const string& playerName) {
-    T* newTile;
+    T* newTile = nullptr;
     T* currentTile = getTile(playerName);
     J player = players[playerName];
-    int xOffset = 0, yOffset = 0;
-    int x = 0, y = 0;
-    int *currentX = &x, *currentY = &y;
+    int colOffset = 0, rowOffset = 0;
+    int row = 0, col = 0;
+    int *currentRow = &row, *currentCol = &col;
     
-    getCoordinate(currentTile, currentX, currentY);
+    getCoordinate(currentTile, currentRow, currentCol);
     
     if (move == Move::UP) {
-        yOffset = 1;
+        rowOffset = -1;
     } else if (move == Move::DOWN) {
-        yOffset = -1;
+        rowOffset = 1;
     } else if (move == Move::LEFT) {
-        xOffset = -1;
+        colOffset = -1;
     } else if (move == Move::RIGHT) {
-        xOffset = 1;
+        colOffset = 1;
     }
     
-    int newX = *currentX + xOffset;
-    int newY = *currentY + yOffset;
+    int newRow = *currentRow + rowOffset;
+    int newCol = *currentCol + colOffset;
     
-    if (newX >= 0 && newX <= C-1 && newY >= 0 && newY <= R-1) {
-        currentTile->removePlayer(player);
+    if (newRow >= 0 && newRow <= R-1 && newCol >= 0 && newCol <= C-1) {
+        newTile = getTile(newRow, newCol);
         newTile->addPlayer(player);
+        currentTile->removePlayer(player);
     }
     
     return newTile;
@@ -111,7 +112,7 @@ T* GameBoard<T, J, R, C>::move(enum Move move, const string& playerName) {
 
 template <class T, class J, const int R, const int C>
 bool GameBoard<T, J, R, C>::win(const string &playerName) {
-    return players[playerName].getRuby() >= 5;
+    return getPlayer(playerName).getRuby() >= 5;
 }
 
 template <class T, class J, const int R, const int C>

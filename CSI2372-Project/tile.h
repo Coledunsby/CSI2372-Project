@@ -29,6 +29,7 @@ public:
     virtual Tile* clone();
     virtual string getType() const = 0;
     virtual string getAction() const = 0;
+    virtual bool hasAction() const = 0;
     friend ostream &operator<<(ostream &output, const Tile *tile);
     void addPlayer(Player& player);
     void addPlayers(vector<Player> newPlayers);
@@ -44,6 +45,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class Restaurant: public Tile {
@@ -52,6 +54,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class SpiceMerchant: public Tile {
@@ -60,6 +63,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class FabricManufacturer: public Tile {
@@ -68,6 +72,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class Jeweler: public Tile {
@@ -76,6 +81,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class CartManufacturer: public Tile {
@@ -84,6 +90,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class SmallMarket: public Tile {
@@ -92,6 +99,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class SpiceMarket: public Tile {
@@ -100,6 +108,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class JewelryMarket: public Tile {
@@ -108,6 +117,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class FabricMarket: public Tile {
@@ -116,6 +126,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class BlackMarket: public Tile {
@@ -124,6 +135,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class Casino: public Tile {
@@ -132,6 +144,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class GemMerchant: public Tile {
@@ -142,6 +155,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 class Palace: public Tile {
@@ -150,6 +164,7 @@ public:
     bool action(Player& player);
     string getType() const;
     string getAction() const;
+    bool hasAction() const;
 };
 
 #endif /* defined(__CSI2372_Project__tile__) */
