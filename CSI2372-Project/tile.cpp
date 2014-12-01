@@ -481,6 +481,9 @@ bool Casino::action(Player& player) {
         
         player.setGold(player.getGold() - 1 + winnings);
         
+        cout << "You won " << winnings << " gold!" << endl;
+        cout << endl;
+        
         return true;
     } else {
         return false;

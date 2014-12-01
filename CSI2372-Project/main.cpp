@@ -90,8 +90,6 @@ bool getAction() {
         
         cout << endl;
     }
-    
-    cout << endl;
 
     return action;
 }
@@ -104,23 +102,27 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
         Player p = gameBoard.getPlayer(pName);
         cout << t;
         if (p.canAct()) {
-            if (t->hasAction() && getAction()) {
-                if (t->action(p)) {
-                    p.eat();
-                    for (Player player : gameBoard.getPlayers(t)) {
-                        if (!(player == p)) {
-                            p.pay(player);
-                            gameBoard.setPlayer(player);
+            if (t->hasAction()) {
+                if (getAction()) {
+                    if (t->action(p)) {
+                        p.eat();
+                        for (Player player : gameBoard.getPlayers(t)) {
+                            if (!(player == p)) {
+                                p.pay(player);
+                                gameBoard.setPlayer(player);
+                            }
                         }
+                        gameBoard.setPlayer(p);
+                        cout << "New stats:" << endl;
+                        cout << p;
+                        cout << endl;
+                    } else {
+                        cout << "You don't have enough resources." << endl;
+                        cout << endl;
                     }
-                    gameBoard.setPlayer(p);
-                    cout << "New stats:" << endl;
-                    cout << p;
-                    cout << endl;
-                } else {
-                    cout << "You don't have enough resources." << endl;
-                    cout << endl;
                 }
+            } else {
+                cout << endl;
             }
         } else {
             cout << "You are unable to perform this action." << endl;
@@ -144,7 +146,7 @@ int main(int argc, const char * argv[]) {
     
     vector<Player> players;
     vector<string> pNames;
-    GameBoard<Tile, Player, ROWS, COLS> *gb = nullptr;
+    GameBoard<Tile, Player, ROWS, COLS> gb;
     
     if (paused) {
         paused = false;
@@ -177,15 +179,12 @@ int main(int argc, const char * argv[]) {
                     Player player(playerName);
                     pNames.push_back(playerName);
                     players.push_back(player);
+                    gb.setPlayer(player);
                     nameValid = true;
                 }
                 cout << endl;
             }
         }
-        
-        // Create gameboard with players
-        GameBoard<Tile, Player, ROWS, COLS> gameBoard(players);
-        gb = &gameBoard;
         
         // Add tiles
         TileFactory *tf = TileFactory::get(ROWS * COLS);
@@ -196,32 +195,67 @@ int main(int argc, const char * argv[]) {
                     t->addPlayers(players);
                     placedPlayers = true;
                 }
-                gameBoard.addTile(t, i, j);
+                gb.addTile(t, i, j);
             }
         }
-        
-        gameBoard.draw(); // FOR DEBUG
-        
-        Tile *t = gameBoard.getTile(pNames[0]);
-        int r = 0;
-        int c = 0;
-        int *row = &r;
-        int *col = &c;
-        
-        gameBoard.getCoordinate(t, row, col);
-
-        cout << endl;
-        cout << "Players starting at " << t->getType() << " (" << t->getIdentifier() << ")" << endl;
-        cout << endl;
     }
     
     while (!winner) {
         for (auto pName : pNames) {
             do {
-                cout << gb->getPlayer(pName) << endl;
-            } while (!takeTurn(*gb, pName));
+                cout << "---------------------------------------------------" << endl;
+                cout << pName << "'s Turn..." << endl;
+                cout << gb.getPlayer(pName) << endl;
+                
+                // Draw gameboard
+                gb.draw();
+                cout << endl;
+                
+                // Tell player which tile they are on
+                Tile *currentTile = gb.getTile(pName);
+                cout << "You are at tile " << currentTile->getIdentifier() << endl;
+                
+                // Get coordinates of current tile
+                int r = 0;
+                int c = 0;
+                int *row = &r;
+                int *col = &c;
+                gb.getCoordinate(currentTile, row, col);
+                
+                // Tell player about surrounding tiles
+                try {
+                    Tile* up = gb.getTile(*row - 1, *col);
+                    cout << "UP:    " << up->getType() << " (" << up->getIdentifier() << ")" << endl;
+                } catch (out_of_range e) {
+                    cout << "UP:    None" << endl;
+                }
+                
+                try {
+                    Tile* down = gb.getTile(*row + 1 , *col);
+                    cout << "DOWN:  " << down->getType() << " (" << down->getIdentifier() << ")" << endl;
+                } catch (out_of_range e) {
+                    cout << "DOWN:  None" << endl;
+                }
+                
+                try {
+                    Tile* left = gb.getTile(*row, *col - 1);
+                    cout << "LEFT:  " << left->getType() << " (" << left->getIdentifier() << ")" << endl;
+                } catch (out_of_range e) {
+                    cout << "LEFT:  None" << endl;
+                }
+                
+                try {
+                    Tile* right = gb.getTile(*row, *col + 1);
+                    cout << "RIGHT: " << right->getType() << " (" << right->getIdentifier() << ")" << endl;
+                } catch (out_of_range e) {
+                    cout << "RIGHT: None" << endl;
+                }
+                
+                cout << endl;
+            } while (!takeTurn(gb, pName));
             
-            if (gb->win(pName)) {
+            if (gb.win(pName)) {
+                cout << pName << " wins!!!" << endl;
                 winner = true;
                 break;
             }

@@ -59,7 +59,11 @@ vector<J> GameBoard<T, J, R, C>::getPlayers(const T* tile) const {
 
 template <class T, class J, const int R, const int C>
 T* GameBoard<T, J, R, C>::getTile(int row, int col) const {
-    return tiles[row][col];
+    if (row >= 0 && row <= R-1 && col >= 0 && col <= C-1) {
+        return tiles[row][col];
+    } else {
+        throw out_of_range("");
+    }
 }
 
 template <class T, class J, const int R, const int C>
@@ -120,7 +124,12 @@ void GameBoard<T, J, R, C>::draw() const {
     for (int r = 0; r < R; r++) {
         for (int c = 0; c < C; c++) {
             const T* tile = getTile(r, c);
-            cout << "[" << tile->getIdentifier() << "]";
+            const int id = tile->getIdentifier();
+            if (id < 10) {
+                cout << "[" << "0" << id << "]";
+            } else {
+                cout << "[" << id << "]";
+            }
         }
         cout << endl;
     }
