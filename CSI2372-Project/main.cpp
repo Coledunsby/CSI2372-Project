@@ -10,6 +10,7 @@
 #include "gameboard.h"
 #include "tilefactory.h"
 #include "tile.h"
+#include <fstream>
 
 #define MIN_PLAYERS 2
 #define MAX_PLAYERS 5
@@ -17,6 +18,7 @@
 #define COLS 6
 
 using namespace std;
+ifstream file("gameboard.txt");
 
 template <const int N>
 Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
@@ -28,7 +30,7 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     while (!moveValid) {
         bool inEnum = true;
         
-        cout << "Where do you want to move? (up/down/left/right)" << endl;
+        cout << "Where do you want to move? (up/down/left/right). If you would like to save the game, enter 'yes'." << endl;
         cin >> moveString;
         
         // Transform input string to uppercase
@@ -42,6 +44,8 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
             move = Move::LEFT;
         } else if (moveString == "RIGHT") {
             move = Move::RIGHT;
+        } else if (moveString == "yes") {
+            save();
         } else {
             cout << "Invalid input!" << endl;
             cin.clear();
@@ -138,6 +142,12 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     return false;
 }
 
+void save(){
+     paused == true;
+     ofstream file("save.dat");
+     ostream& operator<<(ostream, const GameBoard&);
+}
+
 int main(int argc, const char * argv[]) {
 
     bool paused = false;
@@ -153,7 +163,19 @@ int main(int argc, const char * argv[]) {
     } else {
         // Get number of players
         int numPlayers;
+        String answer;
         do {
+            cout << "Is there a game currently saved that you would like to play? (y or n)";
+            cin >> answer;
+            if (answer == "y"){
+                       ifstream file("gmeboard.txt");
+                       file >> gb;
+                       file.close();
+                       for (auto pName : pNames){
+                           pNames.push_back(player.name);
+                       }      
+            }
+            else 
             cout << "How many players? (" << MIN_PLAYERS << "-" << MAX_PLAYERS << ")" << endl;
             cin >> numPlayers;
             if (numPlayers < MIN_PLAYERS || numPlayers > MAX_PLAYERS) {

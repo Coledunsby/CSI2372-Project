@@ -36,6 +36,13 @@ public:
     T* move(enum Move move, const string& playerName);
     bool win(const string& playerName);
     void draw() const;
+    
+    friend ostream& operator<<(ostream &os, GameBoard& GameBoard){
+           os << GameBoard;
+           return os;
+    friend istream& operator>>(istream& istream, GameBoard& GameBoard){
+           is >> GameBoard;
+           return is;
 };
 
 #include "gameboard.cpp"

@@ -37,6 +37,11 @@ public:
     bool isOnTile(Player& player);
     int getIdentifier() const;
     vector<Player> getPlayers() const;
+    
+    friend ostream& operator<<(ostream &os, Tile& tile){
+           os << tile.getType();
+           return os;
+    }
 };
 
 class Desert: public Tile {
