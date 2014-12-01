@@ -27,7 +27,7 @@ public:
     bool operator==(const Tile &tile);
     virtual bool action(Player& player) = 0;
     virtual Tile* clone();
-    virtual string getType() const = 0;
+    virtual string getType() const { return ""; }// = 0
     virtual string getAction() const = 0;
     friend ostream &operator<<(ostream &output, const Tile *tile);
     void addPlayer(Player& player);

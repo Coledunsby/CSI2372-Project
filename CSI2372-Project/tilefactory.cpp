@@ -14,40 +14,40 @@ TileFactory::TileFactory(int _nTiles) {
     index = -1;
     
     for (int i = 0; i < nType; i++) {
-        Restaurant restaurantTile;
-        SpiceMerchant spiceMerchantTile;
-        FabricManufacturer fabricManufacturerTile;
-        Jeweler jewelerTile;
-        CartManufacturer cartManufacturerTile;
-        SmallMarket smallMarketTile;
-        SpiceMarket spiceMarketTile;
-        JewelryMarket jewelryMarketTile;
-        FabricMarket fabricMarketTile;
-        BlackMarket blackMarketTile;
-        Casino casinoTile;
-        GemMerchant gemMerchantTile;
-        Palace palaceTile;
+        Restaurant* restaurantTile = new Restaurant;
+        SpiceMerchant* spiceMerchantTile = new SpiceMerchant;
+        FabricManufacturer* fabricManufacturerTile = new FabricManufacturer;
+        Jeweler* jewelerTile = new Jeweler;
+        CartManufacturer* cartManufacturerTile = new CartManufacturer;
+        SmallMarket* smallMarketTile = new SmallMarket;
+        SpiceMarket* spiceMarketTile = new SpiceMarket;
+        JewelryMarket* jewelryMarketTile = new JewelryMarket;
+        FabricMarket* fabricMarketTile = new FabricMarket;
+        BlackMarket* blackMarketTile = new BlackMarket;
+        Casino* casinoTile = new Casino;
+        GemMerchant* gemMerchantTile = new GemMerchant;
+        Palace* palaceTile = new Palace;
         
-        tiles.push_back(&restaurantTile);
-        tiles.push_back(&spiceMerchantTile);
-        tiles.push_back(&fabricManufacturerTile);
-        tiles.push_back(&jewelerTile);
-        tiles.push_back(&cartManufacturerTile);
-        tiles.push_back(&smallMarketTile);
-        tiles.push_back(&spiceMarketTile);
-        tiles.push_back(&jewelryMarketTile);
-        tiles.push_back(&fabricMarketTile);
-        tiles.push_back(&blackMarketTile);
-        tiles.push_back(&casinoTile);
-        tiles.push_back(&gemMerchantTile);
-        tiles.push_back(&palaceTile);
+        tiles.push_back(restaurantTile);
+        tiles.push_back(spiceMerchantTile);
+        tiles.push_back(fabricManufacturerTile);
+        tiles.push_back(jewelerTile);
+        tiles.push_back(cartManufacturerTile);
+        tiles.push_back(smallMarketTile);
+        tiles.push_back(spiceMarketTile);
+        tiles.push_back(jewelryMarketTile);
+        tiles.push_back(fabricMarketTile);
+        tiles.push_back(blackMarketTile);
+        tiles.push_back(casinoTile);
+        tiles.push_back(gemMerchantTile);
+        tiles.push_back(palaceTile);
     }
     
     while (tiles.size() < nTiles) {
-        Desert desertTile;
-        tiles.push_back(&desertTile);
+        Desert* desertTile = new Desert;
+        tiles.push_back(desertTile);
     }
-    
+
     srand(unsigned(time(0)));
     random_shuffle(tiles.begin(), tiles.end());
 }

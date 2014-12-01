@@ -29,7 +29,7 @@ Tile* Tile::clone() {
 }
 
 ostream &operator<<(ostream &output, const Tile *tile) {
-    cout << tile->getType() << ": " << tile->getAction();
+    cout << "id: " << tile->getIdentifier() << endl;//tile->getType() << endl;// << ": " << tile->getAction();
     
     return output;
 }
@@ -49,7 +49,7 @@ void Tile::removePlayer(Player& player) {
 }
 
 bool Tile::isOnTile(Player& player) {
-    cout << players.size();
+    //cout << players.size();
     /*
     for (Player p : players) {
         if (p == player) {

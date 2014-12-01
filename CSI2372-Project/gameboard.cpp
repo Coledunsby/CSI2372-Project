@@ -35,14 +35,20 @@ void GameBoard<T, J, R, C>::addTile(T* tile, int row, int col) {
 
 template <class T, class J, const int R, const int C>
 void GameBoard<T, J, R, C>::getCoordinate(const T* tile, int *row, int *col) const {
+    bool found = false;
     for (int r = 0; r < R; r++) {
         for (int c = 0; c < C; c++) {
             if (tiles[r][c] == tile) {
-                row = &r;
-                col = &c;
+                *row = r;
+                *col = c;
+                found = true;
                 break;
             }
         }
+    }
+    if (!found) {
+        *row = -1;
+        *col = -1;
     }
 }
 
@@ -76,7 +82,8 @@ T* GameBoard<T, J, R, C>::move(enum Move move, const string& playerName) {
     T* currentTile = getTile(playerName);
     J player = players[playerName];
     int xOffset = 0, yOffset = 0;
-    int *currentX, *currentY;
+    int x = 0, y = 0;
+    int *currentX = &x, *currentY = &y;
     
     getCoordinate(currentTile, currentX, currentY);
     
@@ -110,7 +117,8 @@ template <class T, class J, const int R, const int C>
 void GameBoard<T, J, R, C>::draw() const {
     for (int r = 0; r < R; r++) {
         for (int c = 0; c < C; c++) {
-            cout << "[" << tiles[r][c]->getType() << "]";
+            const T* tile = getTile(r, c);
+            cout << "[" << tile->getIdentifier() << "]";
         }
         cout << endl;
     }
