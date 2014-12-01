@@ -133,15 +133,25 @@ int main(int argc, const char * argv[]) {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 Tile* t = tf->next();
-                //if (t->getType() == "Restaurant" && !placedPlayers) {
-                    //t->addPlayers(players);
-                    gameBoard.addTile(t, i, j);
-                    //placedPlayers = true;
-                //}
+                if (t->getType() == "Restaurant" && !placedPlayers) {
+                    t->addPlayers(players);
+                    placedPlayers = true;
+                }
+                gameBoard.addTile(t, i, j);
             }
         }
         
         gameBoard.draw(); // FOR DEBUG
+        
+        Tile *t = gameBoard.getTile(pNames[0]);
+        int r = 0;
+        int c = 0;
+        int *row = &r;
+        int *col = &c;
+        
+        gameBoard.getCoordinate(t, row, col);
+
+        cout << "players starting at " << t->getType() << "(" << t->getIdentifier() << "): (" << *row << "," << *col << ")";
     }
     
     for (auto pName : pNames) {

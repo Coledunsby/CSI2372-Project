@@ -70,6 +70,7 @@ T* GameBoard<T, J, R, C>::getTile(const string &playerName) {
             J player = getPlayer(playerName);
             if (tiles[r][c]->isOnTile(player)) {
                 tile = tiles[r][c];
+                break;
             }
         }
     }
@@ -118,7 +119,7 @@ void GameBoard<T, J, R, C>::draw() const {
     for (int r = 0; r < R; r++) {
         for (int c = 0; c < C; c++) {
             const T* tile = getTile(r, c);
-            cout << "[" << tile->getIdentifier() << "]";
+            cout << "[" << tile->getType() << "(" << tile->getIdentifier() << ")(" << r << "," << c << ")]";
         }
         cout << endl;
     }

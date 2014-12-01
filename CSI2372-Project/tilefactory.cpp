@@ -48,8 +48,7 @@ TileFactory::TileFactory(int _nTiles) {
         tiles.push_back(desertTile);
     }
 
-    srand(unsigned(time(0)));
-    random_shuffle(tiles.begin(), tiles.end());
+    srand(unsigned(time(NULL)));
 }
 
 TileFactory* TileFactory::get(int _nTiles) {
@@ -58,6 +57,12 @@ TileFactory* TileFactory::get(int _nTiles) {
 }
 
 Tile* TileFactory::next() {
-    index++;
-    return tiles[index];
+    srand(unsigned(time(NULL)));
+    int randIndex = rand() % tiles.size();
+    
+    Tile* tile = tiles[randIndex];
+    
+    tiles.erase(tiles.begin() + randIndex);
+    
+    return tile;
 }

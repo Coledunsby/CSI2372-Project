@@ -49,14 +49,11 @@ void Tile::removePlayer(Player& player) {
 }
 
 bool Tile::isOnTile(Player& player) {
-    //cout << players.size();
-    /*
     for (Player p : players) {
         if (p == player) {
             return true;
         }
     }
-     */
     return false;
 }
 
