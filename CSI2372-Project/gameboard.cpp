@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Cole Dunsby. All rights reserved.
 //
 
-#define SHOW_TILE_TYPES 1
+#define SHOW_TILE_TYPES 0 // Set to 1 to show print tile types when drawing
 
 template <class T, class J, const int R, const int C>
 GameBoard<T, J, R, C>::GameBoard() {
