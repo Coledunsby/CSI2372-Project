@@ -27,6 +27,7 @@ public:
     GameBoard();
     GameBoard(vector<J> _players);
     J getPlayer(const string& playerName);
+    void setPlayer(J player);
     void addTile(T* tile, int row, int col);
     void getCoordinate(const T* tile, int *row, int *col) const;
     vector<J> getPlayers(const T* tile) const;

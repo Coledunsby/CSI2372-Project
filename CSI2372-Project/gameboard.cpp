@@ -24,6 +24,11 @@ J GameBoard<T, J, R, C>::getPlayer(const string &playerName) {
 }
 
 template <class T, class J, const int R, const int C>
+void GameBoard<T, J, R, C>::setPlayer(J player) {
+    players[player.getName()] = player;
+}
+
+template <class T, class J, const int R, const int C>
 void GameBoard<T, J, R, C>::addTile(T* tile, int row, int col) {
     tiles[row][col] = tile;
 }

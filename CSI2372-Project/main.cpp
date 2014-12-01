@@ -108,8 +108,12 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
                 if (t->action(p)) {
                     p.eat();
                     for (Player player : gameBoard.getPlayers(t)) {
-                        p.pay(player);
+                        if (!(player == p)) {
+                            p.pay(player);
+                            gameBoard.setPlayer(player);
+                        }
                     }
+                    gameBoard.setPlayer(p);
                     cout << "New stats:" << endl;
                     cout << p;
                     cout << endl;
@@ -170,9 +174,9 @@ int main(int argc, const char * argv[]) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 } else {
-                    Player *player = new Player(playerName);
+                    Player player(playerName);
                     pNames.push_back(playerName);
-                    players.push_back(*player);
+                    players.push_back(player);
                     nameValid = true;
                 }
                 cout << endl;
