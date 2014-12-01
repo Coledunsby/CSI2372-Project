@@ -20,6 +20,39 @@
 
 using namespace std;
 
+// Helper function to get a boolean answer to a question
+bool getBoolean(string question) {
+    bool action = false;
+    bool actionValid = false;
+    string actionString;
+    
+    while (!actionValid) {
+        cout << question << " (yes/no)" << endl;
+        cin >> actionString;
+        
+        // Transform input string to uppercase
+        transform(actionString.begin(), actionString.end(), actionString.begin(), ::toupper);
+        
+        // Check if answer is 'yes' or 'no'
+        if (actionString == "YES") {
+            action = true;
+            actionValid = true;
+        } else if (actionString == "NO") {
+            action = false;
+            actionValid = true;
+        } else {
+            cout << "Invalid input!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        
+        cout << endl;
+    }
+    
+    return action;
+}
+
+// Helper function to move a player based on text input
 template <const int N>
 Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     Tile* newTile = nullptr;
@@ -36,6 +69,7 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
         // Transform input string to uppercase
         transform(moveString.begin(), moveString.end(), moveString.begin(), ::toupper);
         
+        // Check if value is valid (in enumeration Move)
         if (moveString == "UP") {
             move = Move::UP;
         } else if (moveString == "DOWN") {
@@ -51,6 +85,7 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
             inEnum = false;
         }
         
+        // Try move the player
         if (inEnum) {
             newTile = gameBoard.move(move, pName);
             if (newTile) {
@@ -66,36 +101,7 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     return newTile;
 }
 
-bool getBoolean(string question) {
-    bool action = false;
-    bool actionValid = false;
-    string actionString;
-    
-    while (!actionValid) {
-        cout << question << " (yes/no)" << endl;
-        cin >> actionString;
-        
-        // Transform input string to uppercase
-        transform(actionString.begin(), actionString.end(), actionString.begin(), ::toupper);
-        
-        if (actionString == "YES") {
-            action = true;
-            actionValid = true;
-        } else if (actionString == "NO") {
-            action = false;
-            actionValid = true;
-        } else {
-            cout << "Invalid input!" << endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
-        
-        cout << endl;
-    }
-
-    return action;
-}
-
+// Helper function to handle a player's turn
 template <const int N>
 bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     try {
@@ -103,19 +109,27 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
         Tile* t = getMove(gameBoard, pName);
         Player p = gameBoard.getPlayer(pName);
         cout << t->getType() << ": " << t->getAction() << endl;
-        if (p.canAct() || t->getType() == "Restaurant") {
-            if (t->hasAction()) {
-                if (t->canPerformAction(p)) {
+        if (p.canAct() || t->getType() == "Restaurant") {   // If has food or tile type is Restaurant
+            if (t->hasAction()) {                           // If the tile has an action associated with it
+                if (t->canPerformAction(p)) {               // If the player has the necessary resources to perform the action
                     if (getBoolean("Do you want to perform this action?")) {
                         p.eat();
+                        
+                        // Pay other players on same tile
                         for (Player player : gameBoard.getPlayers(t)) {
                             if (!(player == p)) {
                                 p.pay(player);
                                 gameBoard.setPlayer(player);
                             }
                         }
+                        
+                        // Peform action
                         t->action(p);
+                        
+                        // Update gameboard player
                         gameBoard.setPlayer(p);
+                        
+                        // Print the new stats
                         cout << "New stats:" << endl;
                         cout << p;
                         cout << endl;
@@ -143,9 +157,9 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
 
 int main(int argc, const char * argv[]) {
 
-    bool placedPlayers = false;
-    bool winner = false;
-    bool quit = false;
+    bool placedPlayers = false;     // Whether players have already been placed on the gameboard (on a Restaurant tile)
+    bool winner = false;            // Whether a player has won (game is over)
+    bool quit = false;              // Whether the program should terminate (after save or error)
     
     vector<Player> players;
     vector<string> pNames;
@@ -153,7 +167,9 @@ int main(int argc, const char * argv[]) {
     
     ifstream input_file(SAVE_FILE);
     
+    // If save file exists, check if user wants to load it
     if (input_file.good() && getBoolean("Saved file found. Do you want to continue saved game?")) {
+        // Load game data
         input_file >> gb;
         input_file.close();
     } else {
@@ -206,8 +222,10 @@ int main(int argc, const char * argv[]) {
         }
     }
     
+    // Loop until there is a winner, or a player selects to save and quit
     while (!winner && !quit) {
         if (getBoolean("Do you want to save and exit?")) {
+            // Save and exit
             ofstream output_file(SAVE_FILE);
             output_file << gb;
             output_file.close();

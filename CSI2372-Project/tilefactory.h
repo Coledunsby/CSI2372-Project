@@ -17,7 +17,6 @@ class TileFactory {
     vector<Tile*> tiles;
     int nTiles;
     int nType;
-    int index;
     
 public:
     TileFactory(int _nTiles);

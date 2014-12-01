@@ -10,9 +10,9 @@
 
 TileFactory::TileFactory(int _nTiles) {
     nTiles = _nTiles;
-    nType = floor(nTiles / 14);
-    index = -1;
+    nType = floor(nTiles / 14);     // Number of each type of tile
     
+    // Add nType of each tile
     for (int i = 0; i < nType; i++) {
         Restaurant* restaurantTile = new Restaurant;
         SpiceMerchant* spiceMerchantTile = new SpiceMerchant;
@@ -43,19 +43,20 @@ TileFactory::TileFactory(int _nTiles) {
         tiles.push_back(palaceTile);
     }
     
+    // Fill the remaining spaces with Desert tiles
     while (tiles.size() < nTiles) {
         Desert* desertTile = new Desert;
         tiles.push_back(desertTile);
     }
-
-    srand(unsigned(time(NULL)));
 }
 
+// Initialize an instance of TileFactory
 TileFactory* TileFactory::get(int _nTiles) {
     static TileFactory tf(_nTiles);
     return &tf;
 }
 
+// Choose a random element to add to the gameboard next
 Tile* TileFactory::next() {
     srand(unsigned(time(NULL)));
     int randIndex = rand() % tiles.size();
