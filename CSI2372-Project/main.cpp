@@ -43,6 +43,9 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
         } else if (moveString == "RIGHT") {
             move = Move::RIGHT;
         } else {
+            cout << "Invalid input!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             inEnum = false;
         }
         
@@ -54,9 +57,43 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
                 cout << "You can't move there! You are at the edge of the board." << endl;
             }
         }
+        
+        cout << endl;
     }
     
     return newTile;
+}
+
+bool getAction() {
+    bool action = false;
+    bool actionValid = false;
+    string actionString;
+    
+    while (!actionValid) {
+        cout << "Do you want to perform this action? (yes/no)" << endl;
+        cin >> actionString;
+        
+        // Transform input string to uppercase
+        transform(actionString.begin(), actionString.end(), actionString.begin(), ::toupper);
+        
+        if (actionString == "YES") {
+            action = true;
+            actionValid = true;
+        } else if (actionString == "NO") {
+            action = false;
+            actionValid = true;
+        } else {
+            cout << "Invalid input!" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        
+        cout << endl;
+    }
+    
+    cout << endl;
+
+    return action;
 }
 
 template <const int N>
@@ -67,24 +104,23 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
         Player p = gameBoard.getPlayer(pName);
         cout << t;
         if (p.canAct()) {
-            if (t->hasAction()) {
-                cout << "Do you want to perform this action? (yes/no)" << endl;
-                bool makeAction;
-                cin >> makeAction;
-                if (makeAction) {
-                    if (t->action(p)) {
-                        p.eat();
-                        for (Player player : gameBoard.getPlayers(t)) {
-                            p.pay(player);
-                        }
-                        //gameBoard.setPlayer(op);
+            if (t->hasAction() && getAction()) {
+                if (t->action(p)) {
+                    p.eat();
+                    for (Player player : gameBoard.getPlayers(t)) {
+                        p.pay(player);
                     }
+                    cout << "New stats:" << endl;
+                    cout << p;
+                    cout << endl;
+                } else {
+                    cout << "You don't have enough resources." << endl;
+                    cout << endl;
                 }
-            } else {
-                cout << "No action available on this tile." << endl;
             }
         } else {
             cout << "You are unable to perform this action." << endl;
+            cout << endl;
         }
         return true;
     } catch (istream::failure e) {
@@ -119,6 +155,7 @@ int main(int argc, const char * argv[]) {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
+            cout << endl;
         } while (!(numPlayers >= MIN_PLAYERS && numPlayers <= MAX_PLAYERS));
         
         // Get player names
@@ -130,12 +167,15 @@ int main(int argc, const char * argv[]) {
                 cin >> playerName;
                 if (find(pNames.begin(), pNames.end(), playerName) != pNames.end()) {
                     cout << "Name taken!" << endl;
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 } else {
-                    Player player(playerName);
+                    Player *player = new Player(playerName);
                     pNames.push_back(playerName);
-                    players.push_back(player);
+                    players.push_back(*player);
                     nameValid = true;
                 }
+                cout << endl;
             }
         }
         
@@ -166,14 +206,15 @@ int main(int argc, const char * argv[]) {
         
         gameBoard.getCoordinate(t, row, col);
 
-        cout << "players starting at " << t->getType() << "(" << t->getIdentifier() << "): (" << *row << "," << *col << ")" << endl;
+        cout << endl;
+        cout << "Players starting at " << t->getType() << " (" << t->getIdentifier() << ")" << endl;
+        cout << endl;
     }
     
     while (!winner) {
         for (auto pName : pNames) {
             do {
-                Player player = gb->getPlayer(pName);
-                cout << player << endl;
+                cout << gb->getPlayer(pName) << endl;
             } while (!takeTurn(*gb, pName));
             
             if (gb->win(pName)) {

@@ -56,16 +56,17 @@ int Player::emptySpace() {
 }
 
 ostream &operator<<(ostream &output, const Player &player) {
-    cout << player.name << endl;
-    cout << "------------" << endl;
-    cout << "Gold:   " << player.gold << endl;
-    cout << "Rubies: " << player.ruby << endl;
-    cout << "Spices: " << player.spice << endl;
-    cout << "Fabric: " << player.fabric << endl;
-    cout << "Jewels: " << player.jewel << endl;
-    cout << "Cart:   " << player.cart << endl;
-    cout << "Food:   " << player.food << endl;
-    cout << "------------" << endl;
+    cout << "|------------" << endl;
+    cout << "|" << player.name << endl;
+    cout << "|------------" << endl;
+    cout << "|Gold:   " << player.gold << endl;
+    cout << "|Rubies: " << player.ruby << endl;
+    cout << "|Spices: " << player.spice << endl;
+    cout << "|Fabric: " << player.fabric << endl;
+    cout << "|Jewels: " << player.jewel << endl;
+    cout << "|Cart:   " << player.cart << endl;
+    cout << "|Food:   " << player.food << endl;
+    cout << "|------------" << endl;
     
     return output;
 }
