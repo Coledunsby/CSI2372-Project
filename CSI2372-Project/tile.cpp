@@ -24,10 +24,6 @@ bool Tile::operator==(const Tile &tile) {
     return (identifier == tile.identifier);
 }
 
-Tile* Tile::clone() {
-    return nullptr;
-}
-
 ostream &operator<<(ostream &output, const Tile *tile) {
     cout << tile->getType() << ": " << tile->getAction() << endl;
     
@@ -61,6 +57,10 @@ int Tile::getIdentifier() const {
     return identifier;
 }
 
+void Tile::setIdentifier(const int newIdentifier) {
+    identifier = newIdentifier;
+}
+
 vector<Player> Tile::getPlayers() const {
     return players;
 }
@@ -76,8 +76,12 @@ Desert::Desert() {
     
 }
 
-bool Desert::action(Player& player) {
-    return false;
+void Desert::action(Player& player) {
+    
+}
+
+Desert* Desert::clone() const {
+    return new Desert(*this);
 }
 
 string Desert::getType() const {
@@ -92,6 +96,10 @@ bool Desert::hasAction() const {
     return false;
 }
 
+bool Desert::canPerformAction(Player& player) const {
+    return false;
+}
+
 
 /* ===============================================================
  Restaurant
@@ -103,9 +111,12 @@ Restaurant::Restaurant() {
     
 }
 
-bool Restaurant::action(Player& player) {
+void Restaurant::action(Player& player) {
     player.setFood(10);
-    return true;
+}
+
+Restaurant* Restaurant::clone() const {
+    return new Restaurant(*this);
 }
 
 string Restaurant::getType() const {
@@ -113,11 +124,15 @@ string Restaurant::getType() const {
 }
 
 string Restaurant::getAction() const {
-    return "Your food has been replenished!";
+    return "Replenish your food for free?";
 }
 
 bool Restaurant::hasAction() const {
-    return false;
+    return true;
+}
+
+bool Restaurant::canPerformAction(Player& player) const {
+    return true;
 }
 
 
@@ -131,18 +146,17 @@ SpiceMerchant::SpiceMerchant() {
     
 }
 
-bool SpiceMerchant::action(Player& player) {
-    if (player.getGold() >= (2 + players.size() - 1)) {
-        player.setGold(player.getGold() - 2);
-        player.setSpice(player.getSpice() + std::min(player.emptySpace(), 3));
-        return true;
-    } else {
-        return false;
-    }
+void SpiceMerchant::action(Player& player) {
+    player.setGold(player.getGold() - 2);
+    player.setSpice(player.getSpice() + std::min(player.emptySpace(), 3));
+}
+
+SpiceMerchant* SpiceMerchant::clone() const {
+    return new SpiceMerchant(*this);
 }
 
 string SpiceMerchant::getType() const {
-    return "Spice Merchant";
+    return "SpiceMerchant";
 }
 
 string SpiceMerchant::getAction() const {
@@ -151,6 +165,10 @@ string SpiceMerchant::getAction() const {
 
 bool SpiceMerchant::hasAction() const {
     return true;
+}
+
+bool SpiceMerchant::canPerformAction(Player& player) const {
+    return (player.getGold() >= (2 + players.size() - 1));
 }
 
 
@@ -164,18 +182,17 @@ FabricManufacturer::FabricManufacturer() {
     
 }
 
-bool FabricManufacturer::action(Player& player) {
-    if (player.getGold() >= (2 + players.size() - 1)) {
-        player.setGold(player.getGold() - 2);
-        player.setFabric(player.getFabric() + std::min(player.emptySpace(), 3));
-        return true;
-    } else {
-        return false;
-    }
+void FabricManufacturer::action(Player& player) {
+    player.setGold(player.getGold() - 2);
+    player.setFabric(player.getFabric() + std::min(player.emptySpace(), 3));
+}
+
+FabricManufacturer* FabricManufacturer::clone() const {
+    return new FabricManufacturer(*this);
 }
 
 string FabricManufacturer::getType() const {
-    return "Fabric Manufacturer";
+    return "FabricManufacturer";
 }
 
 string FabricManufacturer::getAction() const {
@@ -184,6 +201,10 @@ string FabricManufacturer::getAction() const {
 
 bool FabricManufacturer::hasAction() const {
     return true;
+}
+
+bool FabricManufacturer::canPerformAction(Player& player) const {
+    return (player.getGold() >= (2 + players.size() - 1));
 }
 
 
@@ -197,14 +218,13 @@ Jeweler::Jeweler() {
     
 }
 
-bool Jeweler::action(Player& player) {
-    if (player.getGold() >= (2 + players.size() - 1)) {
-        player.setGold(player.getGold() - 2);
-        player.setJewel(player.getJewel() + std::min(player.emptySpace(), 3));
-        return true;
-    } else {
-        return false;
-    }
+void Jeweler::action(Player& player) {
+    player.setGold(player.getGold() - 2);
+    player.setJewel(player.getJewel() + std::min(player.emptySpace(), 3));
+}
+
+Jeweler* Jeweler::clone() const {
+    return new Jeweler(*this);
 }
 
 string Jeweler::getType() const {
@@ -219,6 +239,10 @@ bool Jeweler::hasAction() const {
     return true;
 }
 
+bool Jeweler::canPerformAction(Player& player) const {
+    return (player.getGold() >= (2 + players.size() - 1));
+}
+
 
 /* ===============================================================
  CartManufacturer
@@ -230,18 +254,17 @@ CartManufacturer::CartManufacturer() {
     
 }
 
-bool CartManufacturer::action(Player& player) {
-    if (player.getGold() >= (7 + players.size() - 1)) {
-        player.setGold(player.getGold() - 7);
-        player.setCart(player.getCart() + 3);
-        return true;
-    } else {
-        return false;
-    }
+void CartManufacturer::action(Player& player) {
+    player.setGold(player.getGold() - 7);
+    player.setCart(player.getCart() + 3);
+}
+
+CartManufacturer* CartManufacturer::clone() const {
+    return new CartManufacturer(*this);
 }
 
 string CartManufacturer::getType() const {
-    return "Cart Manufacturer";
+    return "CartManufacturer";
 }
 
 string CartManufacturer::getAction() const {
@@ -250,6 +273,10 @@ string CartManufacturer::getAction() const {
 
 bool CartManufacturer::hasAction() const {
     return true;
+}
+
+bool CartManufacturer::canPerformAction(Player& player) const {
+    return (player.getGold() >= (7 + players.size() - 1));
 }
 
 
@@ -263,20 +290,19 @@ SmallMarket::SmallMarket() {
     
 }
 
-bool SmallMarket::action(Player& player) {
-    if (player.getFabric() >= 1 && player.getJewel() >= 1 && player.getSpice() >= 1) {
-        player.setFabric(player.getFabric() - 1);
-        player.setJewel(player.getJewel() - 1);
-        player.setSpice(player.getSpice() - 1);
-        player.setGold(player.getGold() + 8);
-        return true;
-    } else {
-        return false;
-    }
+void SmallMarket::action(Player& player) {
+    player.setFabric(player.getFabric() - 1);
+    player.setJewel(player.getJewel() - 1);
+    player.setSpice(player.getSpice() - 1);
+    player.setGold(player.getGold() + 8);
+}
+
+SmallMarket* SmallMarket::clone() const {
+    return new SmallMarket(*this);
 }
 
 string SmallMarket::getType() const {
-    return "Small Market";
+    return "SmallMarket";
 }
 
 string SmallMarket::getAction() const {
@@ -285,6 +311,10 @@ string SmallMarket::getAction() const {
 
 bool SmallMarket::hasAction() const {
     return true;
+}
+
+bool SmallMarket::canPerformAction(Player& player) const {
+    return (player.getFabric() >= 1 && player.getJewel() >= 1 && player.getSpice() >= 1);
 }
 
 
@@ -298,18 +328,17 @@ SpiceMarket::SpiceMarket() {
     
 }
 
-bool SpiceMarket::action(Player& player) {
-    if (player.getSpice() >= 3) {
-        player.setSpice(player.getSpice() - 3);
-        player.setGold(player.getGold() + 6);
-        return true;
-    } else {
-        return false;
-    }
+void SpiceMarket::action(Player& player) {
+    player.setSpice(player.getSpice() - 3);
+    player.setGold(player.getGold() + 6);
+}
+
+SpiceMarket* SpiceMarket::clone() const {
+    return new SpiceMarket(*this);
 }
 
 string SpiceMarket::getType() const {
-    return "Spice Market";
+    return "SpiceMarket";
 }
 
 string SpiceMarket::getAction() const {
@@ -318,6 +347,10 @@ string SpiceMarket::getAction() const {
 
 bool SpiceMarket::hasAction() const {
     return true;
+}
+
+bool SpiceMarket::canPerformAction(Player& player) const {
+    return (player.getSpice() >= 3);
 }
 
 
@@ -331,18 +364,17 @@ JewelryMarket::JewelryMarket() {
     
 }
 
-bool JewelryMarket::action(Player& player) {
-    if (player.getJewel() >= 3) {
-        player.setJewel(player.getJewel() - 3);
-        player.setGold(player.getGold() + 6);
-        return true;
-    } else {
-        return false;
-    }
+void JewelryMarket::action(Player& player) {
+    player.setJewel(player.getJewel() - 3);
+    player.setGold(player.getGold() + 6);
+}
+
+JewelryMarket* JewelryMarket::clone() const {
+    return new JewelryMarket(*this);
 }
 
 string JewelryMarket::getType() const {
-    return "Jewelry Market";
+    return "JewelryMarket";
 }
 
 string JewelryMarket::getAction() const {
@@ -351,6 +383,10 @@ string JewelryMarket::getAction() const {
 
 bool JewelryMarket::hasAction() const {
     return true;
+}
+
+bool JewelryMarket::canPerformAction(Player& player) const {
+    return (player.getJewel() >= 3);
 }
 
 
@@ -364,18 +400,17 @@ FabricMarket::FabricMarket() {
     
 }
 
-bool FabricMarket::action(Player& player) {
-    if (player.getFabric() >= 3) {
-        player.setFabric(player.getFabric() - 3);
-        player.setGold(player.getGold() + 6);
-        return true;
-    } else {
-        return false;
-    }
+void FabricMarket::action(Player& player) {
+    player.setFabric(player.getFabric() - 3);
+    player.setGold(player.getGold() + 6);
+}
+
+FabricMarket* FabricMarket::clone() const {
+    return new FabricMarket(*this);
 }
 
 string FabricMarket::getType() const {
-    return "Fabric Market";
+    return "FabricMarket";
 }
 
 string FabricMarket::getAction() const {
@@ -384,6 +419,10 @@ string FabricMarket::getAction() const {
 
 bool FabricMarket::hasAction() const {
     return true;
+}
+
+bool FabricMarket::canPerformAction(Player& player) const {
+    return (player.getFabric() >= 3);
 }
 
 
@@ -397,41 +436,39 @@ BlackMarket::BlackMarket() {
     
 }
 
-bool BlackMarket::action(Player& player) {
-    if (player.getGold() >= (1 + players.size() - 1) && player.emptySpace() > 0) {
-        srand(unsigned(time(0)));
-        int randNum = rand() % 5;
+void BlackMarket::action(Player& player) {
+    srand(unsigned(time(0)));
+    int randNum = rand() % 5;
+    
+    while (randNum > 0 && player.emptySpace() > 0) {
+        int goodType = rand() % 4;
         
-        while (randNum > 0 && player.emptySpace() > 0) {
-            int goodType = rand() % 4;
-            
-            // Random number between 0 and 3
-            // 0 = spice
-            // 1 = fabric
-            // 2 = jewel
-            // 3 = ruby
-            
-            if (goodType == 0) {
-                player.setSpice(player.getSpice() + 1);
-            } else if (goodType == 1) {
-                player.setFabric(player.getFabric() + 1);
-            } else if (goodType == 2) {
-                player.setJewel(player.getJewel() + 1);
-            } else {
-                player.setRuby(player.getRuby() + 1);
-            }
-            
-            randNum--;
+        // Random number between 0 and 3
+        // 0 = spice
+        // 1 = fabric
+        // 2 = jewel
+        // 3 = ruby
+        
+        if (goodType == 0) {
+            player.setSpice(player.getSpice() + 1);
+        } else if (goodType == 1) {
+            player.setFabric(player.getFabric() + 1);
+        } else if (goodType == 2) {
+            player.setJewel(player.getJewel() + 1);
+        } else {
+            player.setRuby(player.getRuby() + 1);
         }
         
-        return true;
-    } else {
-        return false;
+        randNum--;
     }
 }
 
+BlackMarket* BlackMarket::clone() const {
+    return new BlackMarket(*this);
+}
+
 string BlackMarket::getType() const {
-    return "Black Market";
+    return "BlackMarket";
 }
 
 string BlackMarket::getAction() const {
@@ -440,6 +477,10 @@ string BlackMarket::getAction() const {
 
 bool BlackMarket::hasAction() const {
     return true;
+}
+
+bool BlackMarket::canPerformAction(Player& player) const {
+    return (player.getGold() >= (1 + players.size() - 1) && player.emptySpace() > 0);
 }
 
 
@@ -453,41 +494,39 @@ Casino::Casino() {
     
 }
 
-bool Casino::action(Player& player) {
-    if (player.getGold() >= (1 + players.size() - 1)) {
-        srand(unsigned(time(0)));
-        int randNum = rand() % 10 + 1;
-        int winnings = 0;
-        
-        // Random number between 1 and 10
-        // 1  =  0 gold (2/5)
-        // 2  =  0 gold (2/5)
-        // 3  =  0 gold (2/5)
-        // 4  =  0 gold (2/5)
-        // 5  =  2 gold (3/10)
-        // 6  =  2 gold (3/10)
-        // 7  =  2 gold (3/10)
-        // 8  =  3 gold (2/10)
-        // 9  =  3 gold (2/10)
-        // 10 = 10 gold (1/10)
-        
-        if (randNum >= 5 && randNum <= 7) {
-            winnings = 2;
-        } else if (randNum >= 8 && randNum <= 9) {
-            winnings = 3;
-        } else if (randNum == 10) {
-            winnings = 10;
-        }
-        
-        player.setGold(player.getGold() - 1 + winnings);
-        
-        cout << "You won " << winnings << " gold!" << endl;
-        cout << endl;
-        
-        return true;
-    } else {
-        return false;
+void Casino::action(Player& player) {
+    srand(unsigned(time(0)));
+    int randNum = rand() % 10 + 1;
+    int winnings = 0;
+    
+    // Random number between 1 and 10
+    // 1  =  0 gold (2/5)
+    // 2  =  0 gold (2/5)
+    // 3  =  0 gold (2/5)
+    // 4  =  0 gold (2/5)
+    // 5  =  2 gold (3/10)
+    // 6  =  2 gold (3/10)
+    // 7  =  2 gold (3/10)
+    // 8  =  3 gold (2/10)
+    // 9  =  3 gold (2/10)
+    // 10 = 10 gold (1/10)
+    
+    if (randNum >= 5 && randNum <= 7) {
+        winnings = 2;
+    } else if (randNum >= 8 && randNum <= 9) {
+        winnings = 3;
+    } else if (randNum == 10) {
+        winnings = 10;
     }
+    
+    player.setGold(player.getGold() - 1 + winnings);
+    
+    cout << "You won " << winnings << " gold!" << endl;
+    cout << endl;
+}
+
+Casino* Casino::clone() const {
+    return new Casino(*this);
 }
 
 string Casino::getType() const {
@@ -502,6 +541,10 @@ bool Casino::hasAction() const {
     return true;
 }
 
+bool Casino::canPerformAction(Player& player) const {
+    return (player.getGold() >= (1 + players.size() - 1));
+}
+
 
 /* ===============================================================
  GemMerchant
@@ -513,20 +556,22 @@ GemMerchant::GemMerchant() {
     previousBuyers = 0;
 }
 
-bool GemMerchant::action(Player& player) {
-    int cost = 12 + previousBuyers;
-    if (player.getGold() >= (cost + players.size() - 1) && player.emptySpace() > 0) {
-        player.setGold(player.getGold() - cost);
-        player.setRuby(player.getRuby() + 1);
-        previousBuyers++;
-        return true;
-    } else {
-        return false;
-    }
+int GemMerchant::getCost() const {
+    return 12 + previousBuyers;
+}
+
+void GemMerchant::action(Player& player) {
+    player.setGold(player.getGold() - getCost());
+    player.setRuby(player.getRuby() + 1);
+    previousBuyers++;
+}
+
+GemMerchant* GemMerchant::clone() const {
+    return new GemMerchant(*this);
 }
 
 string GemMerchant::getType() const {
-    return "Gem Merchant";
+    return "GemMerchant";
 }
 
 string GemMerchant::getAction() const {
@@ -536,6 +581,10 @@ string GemMerchant::getAction() const {
 
 bool GemMerchant::hasAction() const {
     return true;
+}
+
+bool GemMerchant::canPerformAction(Player& player) const {
+    return (player.getGold() >= (getCost() + players.size() - 1) && player.emptySpace() > 0);
 }
 
 
@@ -549,16 +598,15 @@ Palace::Palace() {
     
 }
 
-bool Palace::action(Player& player) {
-    if (player.getFabric() >= 5 && player.getJewel() >= 5 && player.getSpice() >= 5) {
-        player.setFabric(player.getFabric() - 5);
-        player.setJewel(player.getJewel() - 5);
-        player.setSpice(player.getSpice() - 5);
-        player.setRuby(player.getRuby() + 1);
-        return true;
-    } else {
-        return false;
-    }
+void Palace::action(Player& player) {
+    player.setFabric(player.getFabric() - 5);
+    player.setJewel(player.getJewel() - 5);
+    player.setSpice(player.getSpice() - 5);
+    player.setRuby(player.getRuby() + 1);
+}
+
+Palace* Palace::clone() const {
+    return new Palace(*this);
 }
 
 string Palace::getType() const {
@@ -571,4 +619,8 @@ string Palace::getAction() const {
 
 bool Palace::hasAction() const {
     return true;
+}
+
+bool Palace::canPerformAction(Player& player) const {
+    return (player.getFabric() >= 5 && player.getJewel() >= 5 && player.getSpice() >= 5);
 }

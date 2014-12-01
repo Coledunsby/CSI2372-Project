@@ -7,18 +7,18 @@
 //
 
 #include <iostream>
+#include <fstream>
 #include "gameboard.h"
 #include "tilefactory.h"
 #include "tile.h"
-#include <fstream>
 
 #define MIN_PLAYERS 2
 #define MAX_PLAYERS 5
 #define ROWS 6
 #define COLS 6
+#define SAVE_FILE "gameboard.txt"
 
 using namespace std;
-ifstream file("gameboard.txt");
 
 template <const int N>
 Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
@@ -30,7 +30,7 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     while (!moveValid) {
         bool inEnum = true;
         
-        cout << "Where do you want to move? (up/down/left/right). If you would like to save the game, enter 'yes'." << endl;
+        cout << "Where do you want to move? (up/down/left/right)" << endl;
         cin >> moveString;
         
         // Transform input string to uppercase
@@ -44,8 +44,6 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
             move = Move::LEFT;
         } else if (moveString == "RIGHT") {
             move = Move::RIGHT;
-        } else if (moveString == "yes") {
-            save();
         } else {
             cout << "Invalid input!" << endl;
             cin.clear();
@@ -68,13 +66,13 @@ Tile* getMove(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     return newTile;
 }
 
-bool getAction() {
+bool getBoolean(string question) {
     bool action = false;
     bool actionValid = false;
     string actionString;
     
     while (!actionValid) {
-        cout << "Do you want to perform this action? (yes/no)" << endl;
+        cout << question << " (yes/no)" << endl;
         cin >> actionString;
         
         // Transform input string to uppercase
@@ -104,11 +102,11 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
         cin.exceptions(istream::failbit);
         Tile* t = getMove(gameBoard, pName);
         Player p = gameBoard.getPlayer(pName);
-        cout << t;
-        if (p.canAct()) {
+        cout << t->getType() << ": " << t->getAction() << endl;
+        if (p.canAct() || t->getType() == "Restaurant") {
             if (t->hasAction()) {
-                if (getAction()) {
-                    if (t->action(p)) {
+                if (t->canPerformAction(p)) {
+                    if (getBoolean("Do you want to perform this action?")) {
                         p.eat();
                         for (Player player : gameBoard.getPlayers(t)) {
                             if (!(player == p)) {
@@ -116,20 +114,21 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
                                 gameBoard.setPlayer(player);
                             }
                         }
+                        t->action(p);
                         gameBoard.setPlayer(p);
                         cout << "New stats:" << endl;
                         cout << p;
                         cout << endl;
-                    } else {
-                        cout << "You don't have enough resources." << endl;
-                        cout << endl;
                     }
+                } else {
+                    cout << "You are unable to perform this action (not enough resources / cart is full)." << endl;
+                    cout << endl;
                 }
             } else {
                 cout << endl;
             }
         } else {
-            cout << "You are unable to perform this action." << endl;
+            cout << "You are unable to perform this action (no food)." << endl;
             cout << endl;
         }
         return true;
@@ -142,40 +141,25 @@ bool takeTurn(GameBoard<Tile, Player, N, N>& gameBoard, const string& pName) {
     return false;
 }
 
-void save(){
-     paused == true;
-     ofstream file("save.dat");
-     ostream& operator<<(ostream, const GameBoard&);
-}
-
 int main(int argc, const char * argv[]) {
 
-    bool paused = false;
     bool placedPlayers = false;
     bool winner = false;
+    bool quit = false;
     
     vector<Player> players;
     vector<string> pNames;
     GameBoard<Tile, Player, ROWS, COLS> gb;
     
-    if (paused) {
-        paused = false;
+    ifstream input_file(SAVE_FILE);
+    
+    if (input_file.good() && getBoolean("Saved file found. Do you want to continue saved game?")) {
+        input_file >> gb;
+        input_file.close();
     } else {
         // Get number of players
         int numPlayers;
-        String answer;
         do {
-            cout << "Is there a game currently saved that you would like to play? (y or n)";
-            cin >> answer;
-            if (answer == "y"){
-                       ifstream file("gmeboard.txt");
-                       file >> gb;
-                       file.close();
-                       for (auto pName : pNames){
-                           pNames.push_back(player.name);
-                       }      
-            }
-            else 
             cout << "How many players? (" << MIN_PLAYERS << "-" << MAX_PLAYERS << ")" << endl;
             cin >> numPlayers;
             if (numPlayers < MIN_PLAYERS || numPlayers > MAX_PLAYERS) {
@@ -222,64 +206,71 @@ int main(int argc, const char * argv[]) {
         }
     }
     
-    while (!winner) {
-        for (auto pName : pNames) {
-            do {
-                cout << "---------------------------------------------------" << endl;
-                cout << pName << "'s Turn..." << endl;
-                cout << gb.getPlayer(pName) << endl;
+    while (!winner && !quit) {
+        if (getBoolean("Do you want to save and exit?")) {
+            ofstream output_file(SAVE_FILE);
+            output_file << gb;
+            output_file.close();
+            quit = true;
+        } else {
+            for (string pName : gb.getPlayerNames()) {
+                do {
+                    cout << "---------------------------------------------------" << endl;
+                    cout << pName << "'s Turn..." << endl;
+                    cout << gb.getPlayer(pName) << endl;
+                    
+                    // Draw gameboard
+                    gb.draw();
+                    cout << endl;
+                    
+                    // Tell player which tile they are on
+                    Tile *currentTile = gb.getTile(pName);
+                    cout << "You are at tile " << currentTile->getIdentifier() << endl;
+                    
+                    // Get coordinates of current tile
+                    int r = 0;
+                    int c = 0;
+                    int *row = &r;
+                    int *col = &c;
+                    gb.getCoordinate(currentTile, row, col);
+                    
+                    // Tell player about surrounding tiles
+                    try {
+                        Tile* up = gb.getTile(*row - 1, *col);
+                        cout << "UP:    " << up->getType() << " (" << up->getIdentifier() << ")" << endl;
+                    } catch (out_of_range e) {
+                        cout << "UP:    None" << endl;
+                    }
+                    
+                    try {
+                        Tile* down = gb.getTile(*row + 1 , *col);
+                        cout << "DOWN:  " << down->getType() << " (" << down->getIdentifier() << ")" << endl;
+                    } catch (out_of_range e) {
+                        cout << "DOWN:  None" << endl;
+                    }
+                    
+                    try {
+                        Tile* left = gb.getTile(*row, *col - 1);
+                        cout << "LEFT:  " << left->getType() << " (" << left->getIdentifier() << ")" << endl;
+                    } catch (out_of_range e) {
+                        cout << "LEFT:  None" << endl;
+                    }
+                    
+                    try {
+                        Tile* right = gb.getTile(*row, *col + 1);
+                        cout << "RIGHT: " << right->getType() << " (" << right->getIdentifier() << ")" << endl;
+                    } catch (out_of_range e) {
+                        cout << "RIGHT: None" << endl;
+                    }
+                    
+                    cout << endl;
+                } while (!takeTurn(gb, pName));
                 
-                // Draw gameboard
-                gb.draw();
-                cout << endl;
-                
-                // Tell player which tile they are on
-                Tile *currentTile = gb.getTile(pName);
-                cout << "You are at tile " << currentTile->getIdentifier() << endl;
-                
-                // Get coordinates of current tile
-                int r = 0;
-                int c = 0;
-                int *row = &r;
-                int *col = &c;
-                gb.getCoordinate(currentTile, row, col);
-                
-                // Tell player about surrounding tiles
-                try {
-                    Tile* up = gb.getTile(*row - 1, *col);
-                    cout << "UP:    " << up->getType() << " (" << up->getIdentifier() << ")" << endl;
-                } catch (out_of_range e) {
-                    cout << "UP:    None" << endl;
+                if (gb.win(pName)) {
+                    cout << pName << " wins!!!" << endl;
+                    winner = true;
+                    break;
                 }
-                
-                try {
-                    Tile* down = gb.getTile(*row + 1 , *col);
-                    cout << "DOWN:  " << down->getType() << " (" << down->getIdentifier() << ")" << endl;
-                } catch (out_of_range e) {
-                    cout << "DOWN:  None" << endl;
-                }
-                
-                try {
-                    Tile* left = gb.getTile(*row, *col - 1);
-                    cout << "LEFT:  " << left->getType() << " (" << left->getIdentifier() << ")" << endl;
-                } catch (out_of_range e) {
-                    cout << "LEFT:  None" << endl;
-                }
-                
-                try {
-                    Tile* right = gb.getTile(*row, *col + 1);
-                    cout << "RIGHT: " << right->getType() << " (" << right->getIdentifier() << ")" << endl;
-                } catch (out_of_range e) {
-                    cout << "RIGHT: None" << endl;
-                }
-                
-                cout << endl;
-            } while (!takeTurn(gb, pName));
-            
-            if (gb.win(pName)) {
-                cout << pName << " wins!!!" << endl;
-                winner = true;
-                break;
             }
         }
     }

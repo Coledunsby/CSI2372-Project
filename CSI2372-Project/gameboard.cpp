@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Cole Dunsby. All rights reserved.
 //
 
+#define SHOW_TILE_TYPES 1
+
 template <class T, class J, const int R, const int C>
 GameBoard<T, J, R, C>::GameBoard() {
     
@@ -55,6 +57,15 @@ void GameBoard<T, J, R, C>::getCoordinate(const T* tile, int *row, int *col) con
 template <class T, class J, const int R, const int C>
 vector<J> GameBoard<T, J, R, C>::getPlayers(const T* tile) const {
     return tile->getPlayers();
+}
+
+template <class T, class J, const int R, const int C>
+vector<string> GameBoard<T, J, R, C>::getPlayerNames() const {
+    vector<string> names;
+    for (const auto& kv : players) {
+        names.push_back(kv.first);
+    }
+    return names;
 }
 
 template <class T, class J, const int R, const int C>
@@ -125,10 +136,14 @@ void GameBoard<T, J, R, C>::draw() const {
         for (int c = 0; c < C; c++) {
             const T* tile = getTile(r, c);
             const int id = tile->getIdentifier();
-            if (id < 10) {
-                cout << "[" << "0" << id << "]";
+            if (SHOW_TILE_TYPES) {
+                cout << "[" << tile->getType() << " (" << id << ")]";
             } else {
-                cout << "[" << id << "]";
+                if (id < 10) {
+                    cout << "[" << "0" << id << "]";
+                } else {
+                    cout << "[" << id << "]";
+                }
             }
         }
         cout << endl;
